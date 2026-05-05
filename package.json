@@ -11,19 +11,37 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@gsap/react": "2.1.2",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "clsx": "^2",
+    "gsap": "3.15.0",
+    "lenis": "1.3.23",
+    "motion": "^12",
     "next": "14.2.35",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "sharp": "latest",
+    "tailwind-merge": "^2",
+    "three": "0.168.0",
+    "zustand": "5.0.13"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6",
+    "@testing-library/react": "^16",
+    "@testing-library/user-event": "^14",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "typescript": "^5",
+    "@types/three": "^0.168",
+    "@vitest/ui": "^1",
+    "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
-    "tailwindcss": "^3.4.19",
+    "jsdom": "^24",
     "postcss": "^8",
-    "autoprefixer": "^10"
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5",
+    "vitest": "^1"
   }
 }
