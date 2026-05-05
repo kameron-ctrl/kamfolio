@@ -13,7 +13,7 @@ import { create } from "zustand";
 
 export type ScrollPhase = "vertical" | "transition" | "horizontal";
 
-interface ScrollState {
+export interface ScrollState {
   scrollY: number;
   velocity: number;
   displayVelocity: number; // lerped — downstream visual effects use this
