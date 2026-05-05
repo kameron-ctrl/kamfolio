@@ -101,58 +101,56 @@
 
 ## Traceability
 
-*(Populated by roadmapper)*
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | — | Pending |
-| FOUND-02 | — | Pending |
-| FOUND-03 | — | Pending |
-| FOUND-04 | — | Pending |
-| FOUND-05 | — | Pending |
-| HERO-01 | — | Pending |
-| HERO-02 | — | Pending |
-| HERO-03 | — | Pending |
-| HERO-04 | — | Pending |
-| HERO-05 | — | Pending |
-| HERO-06 | — | Pending |
-| HERO-07 | — | Pending |
-| HERO-08 | — | Pending |
-| NEB-01 | — | Pending |
-| NEB-02 | — | Pending |
-| NEB-03 | — | Pending |
-| NEB-04 | — | Pending |
-| NEB-05 | — | Pending |
-| PROJ-01 | — | Pending |
-| PROJ-02 | — | Pending |
-| PROJ-03 | — | Pending |
-| PROJ-04 | — | Pending |
-| PROJ-05 | — | Pending |
-| PROJ-06 | — | Pending |
-| PROJ-07 | — | Pending |
-| PERS-01 | — | Pending |
-| PERS-02 | — | Pending |
-| PERS-03 | — | Pending |
-| PERS-04 | — | Pending |
-| PERS-05 | — | Pending |
-| PERS-06 | — | Pending |
-| HIRE-01 | — | Pending |
-| HIRE-02 | — | Pending |
-| HIRE-03 | — | Pending |
-| HIRE-04 | — | Pending |
-| QUAL-01 | — | Pending |
-| QUAL-02 | — | Pending |
-| QUAL-03 | — | Pending |
-| QUAL-04 | — | Pending |
-| QUAL-05 | — | Pending |
-| QUAL-06 | — | Pending |
-| QUAL-07 | — | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Pending |
+| HERO-01 | Phase 2 | Pending |
+| HERO-02 | Phase 2 | Pending |
+| HERO-03 | Phase 2 | Pending |
+| HERO-04 | Phase 2 | Pending |
+| HERO-05 | Phase 2 | Pending |
+| HERO-06 | Phase 4 | Pending |
+| HERO-07 | Phase 4 | Pending |
+| HERO-08 | Phase 4 | Pending |
+| NEB-01 | Phase 3 | Pending |
+| NEB-02 | Phase 3 | Pending |
+| NEB-03 | Phase 3 | Pending |
+| NEB-04 | Phase 3 | Pending |
+| NEB-05 | Phase 3 | Pending |
+| PROJ-01 | Phase 5 | Pending |
+| PROJ-02 | Phase 5 | Pending |
+| PROJ-03 | Phase 5 | Pending |
+| PROJ-04 | Phase 5 | Pending |
+| PROJ-05 | Phase 5 | Pending |
+| PROJ-06 | Phase 5 | Pending |
+| PROJ-07 | Phase 5 | Pending |
+| PERS-01 | Phase 6 | Pending |
+| PERS-02 | Phase 6 | Pending |
+| PERS-03 | Phase 6 | Pending |
+| PERS-04 | Phase 6 | Pending |
+| PERS-05 | Phase 6 | Pending |
+| PERS-06 | Phase 6 | Pending |
+| HIRE-01 | Phase 7 | Pending |
+| HIRE-02 | Phase 7 | Pending |
+| HIRE-03 | Phase 7 | Pending |
+| HIRE-04 | Phase 7 | Pending |
+| QUAL-01 | Phase 5 | Pending |
+| QUAL-02 | Phase 8 | Pending |
+| QUAL-03 | Phase 4 | Pending |
+| QUAL-04 | Phase 2 | Pending |
+| QUAL-05 | Phase 8 | Pending |
+| QUAL-06 | Phase 8 | Pending |
+| QUAL-07 | Phase 8 | Pending |
 
 **Coverage:**
 - v1 requirements: 41 total
-- Mapped to phases: 0 (roadmapper will fill)
-- Unmapped: 41 ⚠️
+- Mapped to phases: 41
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-05-05*
-*Last updated: 2026-05-05 after initial definition*
+*Last updated: 2026-05-05 after roadmap creation (8 phases)*
