@@ -28,6 +28,10 @@ export default function LenisProvider({
   const lenisRef = useRef<Lenis | null>(null);
 
   useLayoutEffect(() => {
+    // Register GSAP plugin here (client-only) — never at module scope (SSR crash).
+    // See CLAUDE.md: "GSAP plugins must be registered inside useEffect."
+    gsap.registerPlugin(ScrollTrigger);
+
     // Step 1: Create Lenis with autoRaf:false (Pitfall 1 — prevents double RAF)
     const lenis = new Lenis({
       duration: 1.2,

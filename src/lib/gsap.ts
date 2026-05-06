@@ -1,17 +1,16 @@
 /**
- * Single GSAP plugin registration site (D-15, FOUND-05).
+ * Pure GSAP re-export — no side effects, safe to import from any module.
  *
- * Every component that uses GSAP imports gsap and ScrollTrigger from THIS file.
- * No other file in the codebase may call `gsap.registerPlugin`.
+ * Plugin registration is intentionally NOT done here. `gsap.registerPlugin`
+ * must be called inside a `useLayoutEffect` (client-only) to avoid SSR crashes
+ * in Next.js App Router. See CLAUDE.md: "GSAP plugins must be registered inside
+ * useEffect (never at module level — SSR will fail)."
  *
- * Per RESEARCH.md Pitfall 4: this file must only be imported from "use client"
- * components. Importing from a Server Component will trigger SSR crashes
- * because ScrollTrigger references DOM globals at module-load time.
+ * Registration happens in LenisProvider, which is the guaranteed first client
+ * context where GSAP is wired up (D-04, FOUND-05).
  */
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default gsap;
 export { ScrollTrigger };
