@@ -33,7 +33,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The page transitions from vertical scrolling to a pinned horizontal zone without visual stutter or position jump
   4. GSAP ScrollTrigger fires are verifiably locked to Lenis position (not native scrollY) — a test animation advances at the correct visual offset
   5. Importing GSAP plugins from any component never throws a duplicate-registration warning in the console
-**Plans**: TBD
+**Plans:** 4 plans
+  - [x] 01-01-PLAN.md — Scaffold Next.js 14 + TypeScript + Tailwind v3 + install pinned deps + Vitest setup (Wave 0)
+  - [x] 01-02-PLAN.md — Single GSAP plugin registration site + Zustand scroll store with displayVelocity lerp + computePhase tests (Wave 1)
+  - [x] 01-03-PLAN.md — LenisProvider 5-step init order + ScrollDebugHUD + mount in layout.tsx (Wave 2)
+  - [x] 01-04-PLAN.md — HorizontalTrack pin+scrub + page.tsx with vertical spacer and placeholder slots (Wave 3)
 **UI hint**: yes
 
 ### Phase 2: Moon Hero
@@ -133,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scroll Foundation | 0/? | Not started | - |
+| 1. Scroll Foundation | 0/4 | Not started | - |
 | 2. Moon Hero | 0/? | Not started | - |
 | 3. Nebula System | 0/? | Not started | - |
 | 4. Hero Section | 0/? | Not started | - |
