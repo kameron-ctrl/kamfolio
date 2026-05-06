@@ -57,7 +57,10 @@ export default function LenisProvider({
     // components via useGSAP — Plan 04 HorizontalTrack is the first.
 
     // Step 6: Write scroll state to Zustand on every Lenis tick (D-08, D-09)
-    lenis.on("scroll", (lenisInstance: Lenis) => {
+    // Named reference required so we can remove it explicitly in cleanup.
+    // React 18 StrictMode double-invokes useLayoutEffect; an anonymous handler
+    // would accumulate on each remount causing duplicate Zustand writes.
+    const onScrollState = (lenisInstance: Lenis): void => {
       const total = document.body.scrollHeight - window.innerHeight;
       const rawProgress = total > 0 ? lenisInstance.animatedScroll / total : 0;
       const { phase, progress } = computePhase(rawProgress);
@@ -68,9 +71,12 @@ export default function LenisProvider({
         phase,
         progress,
       });
-    });
+    };
+    lenis.on("scroll", onScrollState);
 
     return () => {
+      lenis.off("scroll", ScrollTrigger.update);
+      lenis.off("scroll", onScrollState);
       gsap.ticker.remove(tickerFn);
       lenis.destroy();
       lenisRef.current = null;
