@@ -65,9 +65,12 @@ export default function LenisProvider({
       const rawProgress = total > 0 ? lenisInstance.animatedScroll / total : 0;
       const { phase, progress } = computePhase(rawProgress);
 
+      // velocity MUST always be included here — omitting it causes displayVelocity
+      // to lerp toward stale stored velocity rather than the current scroll velocity.
+      // See scroll-store.ts: set() lerps displayVelocity using (partial.velocity ?? state.velocity).
       useScrollStore.getState().set({
         scrollY: lenisInstance.animatedScroll,
-        velocity: lenisInstance.velocity,
+        velocity: lenisInstance.velocity, // required — drives displayVelocity lerp
         phase,
         progress,
       });
