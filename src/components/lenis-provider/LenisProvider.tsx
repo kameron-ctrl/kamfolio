@@ -62,6 +62,11 @@ export default function LenisProvider({
     // would accumulate on each remount causing duplicate Zustand writes.
     const onScrollState = (lenisInstance: Lenis): void => {
       const total = document.body.scrollHeight - window.innerHeight;
+      if (process.env.NODE_ENV === "development" && total <= 0) {
+        console.warn(
+          "[LenisProvider] document.body.scrollHeight <= window.innerHeight — phase tracking disabled. Check layout min-heights."
+        );
+      }
       const rawProgress = total > 0 ? lenisInstance.animatedScroll / total : 0;
       const { phase, progress } = computePhase(rawProgress);
 
