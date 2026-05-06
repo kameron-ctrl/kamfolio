@@ -13,13 +13,16 @@
 import { useScrollStore } from "@/lib/scroll-store";
 
 export default function ScrollDebugHUD(): JSX.Element | null {
-  if (process.env.NODE_ENV !== "development") return null;
-
+  // Hooks must be called unconditionally (Rules of Hooks).
+  // process.env.NODE_ENV is a build-time constant — Next.js tree-shakes
+  // the rendered output in production even though hooks are always called.
   const scrollY = useScrollStore((s) => s.scrollY);
   const velocity = useScrollStore((s) => s.velocity);
   const displayVelocity = useScrollStore((s) => s.displayVelocity);
   const phase = useScrollStore((s) => s.phase);
   const progress = useScrollStore((s) => s.progress);
+
+  if (process.env.NODE_ENV !== "development") return null;
 
   return (
     <div
