@@ -12,15 +12,13 @@ A visitor should immediately feel the combination that makes Kameron distinctive
 
 ### Validated
 
-(None yet — ship to validate)
+**Foundation** — Validated in Phase 01: scroll-foundation (2026-05-06)
+- [x] Lenis smooth scroll integrated with velocity exposed to all effects
+- [x] Vertical → horizontal scroll transition: vertical (0–40%), pin/transition zone (40–55%), horizontal (55–100%)
+- [x] GSAP ScrollTrigger driving the sticky horizontal pin
+- [x] Velocity pipeline: `displayVelocity` lerped from scroll delta, piped to skewX, blur, and nebula spread multipliers
 
 ### Active
-
-**Foundation**
-- [ ] Lenis smooth scroll integrated with velocity exposed to all effects
-- [ ] Vertical → horizontal scroll transition: vertical (0–40%), pin/transition zone (40–55%), horizontal (55–100%)
-- [ ] GSAP ScrollTrigger driving the sticky horizontal pin
-- [ ] Velocity pipeline: `displayVelocity` lerped from scroll delta, piped to skewX, blur, and nebula spread multipliers
 
 **Hero — The Moon**
 - [ ] THREE.SphereGeometry moon with NASA displacement + normal maps (public domain)
@@ -113,4 +111,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-05 after initialization*
+*Last updated: 2026-05-06 — Phase 01 (scroll-foundation) complete*
