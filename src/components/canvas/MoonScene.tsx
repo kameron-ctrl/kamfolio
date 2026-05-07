@@ -77,16 +77,18 @@ export default function MoonScene({ onReady }: MoonSceneProps): JSX.Element {
 
   // Drei useTexture with Record input — keys map to MeshStandardMaterial props.
   // The Suspense boundary in MoonSceneClient handles the loading throw.
-  // RESEARCH.md Pattern 3: onLoad fires inside R3F render loop AFTER
-  // GPU upload — the correct moment to surface "ready" to the wrapper.
-  const textures = useTexture(
-    {
-      map: "/textures/moon/moon-color.png",
-      displacementMap: "/textures/moon/moon-displacement.png",
-      normalMap: "/textures/moon/moon-normal.png",
-    },
-    () => onReady(),
-  );
+  // onLoad fires during Suspense preloading (before this component mounts),
+  // so ready signalling is handled by the useEffect below instead.
+  const textures = useTexture({
+    map: "/textures/moon/moon-color.png",
+    displacementMap: "/textures/moon/moon-displacement.png",
+    normalMap: "/textures/moon/moon-normal.png",
+  });
+
+  // Textures are guaranteed loaded when Suspense resolves and this mounts.
+  useEffect(() => {
+    onReady();
+  }, [onReady]);
 
   // Initial position — apply X offset and start Z immediately so the
   // moon never flashes at the wrong location in the first frame
