@@ -61,3 +61,23 @@ describe("MoonScene constants — D-17 (glow rim radius)", () => {
     expect(MOON_GLOW_RADIUS_MULTIPLIER).toBe(1.05);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────
+// Module structure smoke tests (Plan 02 Task 3)
+// jsdom has no WebGL — we assert module shape, not rendered output.
+// ─────────────────────────────────────────────────────────────────────────
+
+describe("MoonScene.client — module structure", () => {
+  it("exports a default React component (function)", async () => {
+    const mod = await import("@/components/canvas/MoonScene.client");
+    expect(typeof mod.default).toBe("function");
+  });
+});
+
+describe("MoonScene constants regression — DPR plumbed to Canvas", () => {
+  it("MOON_DPR_CAP is the same tuple consumed by MoonScene.client.tsx", () => {
+    // MoonScene.client.tsx imports MOON_DPR_CAP and applies it to <Canvas dpr={MOON_DPR_CAP}>.
+    // This regression test guards against silent drift between the constant and the test value.
+    expect(MOON_DPR_CAP).toEqual([1, 1.5]);
+  });
+});
