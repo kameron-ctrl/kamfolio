@@ -51,9 +51,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. On page load, the moon starts small/distant and smoothly grows toward the viewer over ~2.5 seconds
   5. Canvas DPR is capped at 1.5 — inspecting the canvas element on a retina display confirms pixel ratio does not exceed 1.5
 **Plans:** 3 plans
-  - [ ] 02-01-PLAN.md — Wave 0 prerequisites: NASA textures, design tokens, RED test scaffold (Wave 0)
-  - [ ] 02-02-PLAN.md — MoonScene core: constants, R3F mesh + textures + lights, DPR canvas, Z fly-in entrance, rotation, layout wiring (Wave 1)
-  - [ ] 02-03-PLAN.md — Atmospheric glow rim: MoonGlow component with BackSide + AdditiveBlending, composed into MoonScene (Wave 2)
+  - [x] 02-01-PLAN.md — Wave 0 prerequisites: NASA textures, design tokens, RED test scaffold (Wave 0)
+  - [x] 02-02-PLAN.md — MoonScene core: constants, R3F mesh + textures + lights, DPR canvas, Z fly-in entrance, rotation, layout wiring (Wave 1)
+  - [x] 02-03-PLAN.md — Atmospheric glow rim: MoonGlow component with BackSide + AdditiveBlending, composed into MoonScene (Wave 2)
 **UI hint**: yes
 
 ### Phase 3: Nebula System
