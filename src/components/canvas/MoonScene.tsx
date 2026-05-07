@@ -35,6 +35,7 @@ import {
   MOON_ROTATION_PER_FRAME,
   MOON_X_OFFSET,
 } from "./MoonScene.constants";
+import MoonGlow from "./MoonGlow";
 
 /** Sphere radius in Three.js units — 1.5 reads as ~50% viewport height
  *  given camera fov=50 + camera.z=6 (D-05, RESEARCH.md Pattern 4). */
@@ -147,6 +148,9 @@ export default function MoonScene({ onReady }: MoonSceneProps): JSX.Element {
           metalness={0.0}
         />
       </mesh>
+      {/* HERO-03: atmospheric glow rim — rendered AFTER moon for
+          correct AdditiveBlending depth order (RESEARCH Pitfall 5). */}
+      <MoonGlow moonRadius={MOON_RADIUS} xOffset={MOON_X_OFFSET} />
     </>
   );
 }

@@ -81,3 +81,21 @@ describe("MoonScene constants regression — DPR plumbed to Canvas", () => {
     expect(MOON_DPR_CAP).toEqual([1, 1.5]);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────
+// MoonGlow module structure smoke tests (Plan 03 Task 2)
+// jsdom has no WebGL — assert module shape only.
+// ─────────────────────────────────────────────────────────────────────────
+
+describe("MoonGlow — module structure (HERO-03)", () => {
+  it("exports a default React component (function)", async () => {
+    const mod = await import("@/components/canvas/MoonGlow");
+    expect(typeof mod.default).toBe("function");
+  });
+
+  it("MOON_GLOW_RADIUS_MULTIPLIER is the value MoonGlow multiplies moonRadius by", () => {
+    // MoonGlow.tsx computes glowRadius = moonRadius * MOON_GLOW_RADIUS_MULTIPLIER.
+    // Locking 1.05 here ensures the glow stays "5% larger" per D-17.
+    expect(MOON_GLOW_RADIUS_MULTIPLIER).toBe(1.05);
+  });
+});
