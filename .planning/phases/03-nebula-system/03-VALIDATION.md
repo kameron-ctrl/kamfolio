@@ -32,6 +32,10 @@ created: 2026-05-07
 - **Before `/gsd-verify-work`:** Full suite must be green
 - **Max feedback latency:** ~10 seconds
 
+### Known Latency Exception
+
+- **Plan 03-04 Task 2** intentionally chains `npx next build` into its `<automated>` verify. The build is expected to run ~30–60 seconds on this project. This is a deliberate exception for the Wave 3 final integration gate — it acts as the QUAL-01 SSR regression guard (RESEARCH.md Pitfall 2 — texture creation must not execute during SSR) and is the only build invocation in Phase 3. Routine per-task sampling stays under the 10-second target; only the final integration verify pays the build cost.
+
 ---
 
 ## Per-Task Verification Map

@@ -543,22 +543,25 @@ useEffect(() => {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **DPR constant drift bug**
    - What we know: `MoonScene.constants.ts` exports `MOON_DPR_CAP = [1, 2]` but the existing test asserts `[1, 1.5]`. Three tests are currently failing.
    - What's unclear: Whether the constant was intentionally changed to `[1, 2]` or drifted accidentally
    - Recommendation: Wave 0 of Phase 3 should resolve this by fixing the constant to `[1, 1.5]` (per QUAL-04 requirement) or updating the test — the planner should include this as an explicit task
+   - **RESOLVED:** Plan 03-01 Task 1 fixes `MOON_DPR_CAP` to `[1, 1.5]` per QUAL-04, restoring the three failing tests to green at the Wave 0 gate.
 
 2. **Layer 1 gradient strategy**
    - What we know: D-10 gives Claude discretion. Current `<Canvas gl={{ alpha: false }}>` and `<color attach="background">` in MoonScene mean a CSS approach requires changing two existing files.
    - What's unclear: Which approach is preferred for long-term maintainability
    - Recommendation: CSS gradient on the wrapper div (simpler, no R3F object, trivially updatable). Requires changing `alpha: false → true` in MoonSceneClient and removing `<color>` from MoonScene.
+   - **RESOLVED:** Plan 03-04 Task 2 chose the CSS approach — `NEBULA_L1_GRADIENT` applied as `background` on the MoonSceneClient wrapper div, Canvas switched to `alpha: true`, `<color attach="background">` removed from MoonScene.tsx (RESEARCH.md Pitfall 6 three-step migration executed in full).
 
 3. **Horizontal parallax `progress` mapping**
    - What we know: `progress` is 0–1 within the horizontal zone. The scroll store has no `horizontalProgress` field specifically — it is `progress` when `phase === "horizontal"`.
    - What's unclear: CONTEXT.md uses the term `horizontalProgress` — this is an alias for `progress` when `phase === "horizontal"`, not a separate field.
    - Recommendation: Document this clearly in constants and inline comments. Use `const isHorizontal = phase === "horizontal"` guard before applying x-axis parallax.
+   - **RESOLVED:** Plan 03-01 locks `NEBULA_H_PARALLAX_RANGE = 12` (world units) in constants; Plan 03-04 Task 1 multiplies `progress * coefficient * NEBULA_H_PARALLAX_RANGE * breathe` only when `phase === "horizontal"`, treating `progress` as the horizontal alias per the recommendation.
 
 ---
 
