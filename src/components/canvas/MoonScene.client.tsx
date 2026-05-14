@@ -22,8 +22,10 @@ import dynamic from "next/dynamic";
 import { Suspense, useCallback, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { MOON_DPR_CAP } from "./MoonScene.constants";
+import { NEBULA_L1_GRADIENT } from "./NebulaScene.constants";
 
 const MoonScene = dynamic(() => import("./MoonScene"), { ssr: false });
+const NebulaScene = dynamic(() => import("./NebulaScene"), { ssr: false });
 
 export default function MoonSceneClient(): JSX.Element {
   const [ready, setReady] = useState<boolean>(false);
@@ -42,6 +44,7 @@ export default function MoonSceneClient(): JSX.Element {
         pointerEvents: "none",
         opacity: ready ? 1 : 0,
         transition: "opacity 0.5s ease",
+        background: NEBULA_L1_GRADIENT,
       }}
       data-testid="moon-canvas-wrapper"
     >
@@ -51,6 +54,7 @@ export default function MoonSceneClient(): JSX.Element {
         camera={{ fov: 50, position: [0, 0, 6] }}
       >
         <Suspense fallback={null}>
+          <NebulaScene />
           <MoonScene onReady={handleReady} />
         </Suspense>
       </Canvas>
