@@ -21,6 +21,7 @@
  * GPU memory leaks during HMR cycles.
  */
 import { useEffect, useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import {
   NEBULA_LAYERS,
@@ -34,9 +35,15 @@ import {
   NEBULA_CLUSTER_RADIUS,
   NEBULA_SPREAD_X,
   NEBULA_SPREAD_Y,
+  NEBULA_BREATHE_MAX,
+  NEBULA_BREATHE_VELOCITY_SCALE,
+  NEBULA_H_PARALLAX_RANGE,
+  NEBULA_V_PARALLAX_PX_TO_UNIT,
+  NEBULA_REDUCED_MOTION_PARALLAX_SCALE,
   type NebulaLayer,
   type NebulaParticleCounts,
 } from "./NebulaScene.constants";
+import { useScrollStore } from "@/lib/scroll-store";
 import { createNebulaTextures, type NebulaTextures } from "@/lib/nebula-textures";
 
 /** Pick desktop or mobile particle counts at mount (UI-SPEC mobile contract). */
@@ -269,6 +276,76 @@ export default function NebulaScene(): JSX.Element {
     () => NEBULA_LAYERS.map((layer) => buildLayerResources(layer, counts, textures)),
     [counts, textures]
   );
+
+  // Detect reduced-motion once at mount (UI-SPEC Reduced Motion Contract).
+  const reducedMotionRef = useRef<boolean>(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    reducedMotionRef.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+  }, []);
+
+  // Capture the last vertical-zone scrollY value so horizontal-phase Y parallax
+  // freezes cleanly (RESEARCH.md Pitfall 1).
+  const frozenVerticalScrollY = useRef<number>(0);
+
+  // Per-frame parallax + breathe mutation (Plan 04).
+  // Reads scroll state via getState() — never via selector subscription (D-08).
+  useFrame(() => {
+    const { scrollY, displayVelocity, phase, progress } = useScrollStore.getState();
+    const reducedMotion = reducedMotionRef.current;
+
+    // Breathe multiplier ramp: 1.0 at rest → NEBULA_BREATHE_MAX at peak |velocity|.
+    // Reduced-motion clamps to 1.0 (no pulse).
+    const normalizedVelocity = Math.min(
+      Math.abs(displayVelocity) * NEBULA_BREATHE_VELOCITY_SCALE,
+      1.0
+    );
+    const breathe = reducedMotion
+      ? 1.0
+      : 1.0 + (NEBULA_BREATHE_MAX - 1.0) * normalizedVelocity;
+
+    // Track the freeze point — last scrollY observed while NOT in horizontal.
+    // When phase flips to horizontal, the value frozen here is whatever was
+    // written most recently in the vertical/transition phases.
+    if (phase !== "horizontal") {
+      frozenVerticalScrollY.current = scrollY;
+    }
+
+    const verticalSource =
+      phase === "horizontal" ? frozenVerticalScrollY.current : scrollY;
+
+    // Reduced-motion scales every parallax coefficient down to 20% of nominal.
+    const motionScale = reducedMotion ? NEBULA_REDUCED_MOTION_PARALLAX_SCALE : 1.0;
+
+    for (let i = 0; i < NEBULA_LAYERS.length; i++) {
+      const layer = NEBULA_LAYERS[i];
+      const ref = layerRefs[i];
+      const points = ref.current;
+      if (!points) continue;
+
+      const effectiveCoeff = layer.coefficient * motionScale;
+
+      // Y parallax — pixels → world units. Negative because scrolling DOWN
+      // (positive scrollY delta) pulls layers UP (negative Y) for the
+      // visitor's-eye-moving-forward feel.
+      const yOffset =
+        -verticalSource *
+        NEBULA_V_PARALLAX_PX_TO_UNIT *
+        effectiveCoeff *
+        breathe;
+
+      // X parallax — only active in horizontal phase. progress is 0..1.
+      const xOffset =
+        phase === "horizontal"
+          ? -progress * NEBULA_H_PARALLAX_RANGE * effectiveCoeff * breathe
+          : 0;
+
+      points.position.set(xOffset, yOffset, layer.z);
+      points.scale.setScalar(breathe);
+    }
+  });
 
   // Dispose imperative resources on unmount (RESEARCH.md Pitfall 3).
   useEffect(() => {

@@ -139,7 +139,7 @@ export default function MoonScene({ onReady }: MoonSceneProps): JSX.Element {
         intensity={SUN_INTENSITY}
         color={SUN_COLOR}
       />
-      <mesh ref={meshRef}>
+      <mesh ref={meshRef} renderOrder={4}>
         <sphereGeometry args={[MOON_RADIUS, MOON_SEGMENTS, MOON_SEGMENTS]} />
         <meshStandardMaterial
           map={textures.map}
