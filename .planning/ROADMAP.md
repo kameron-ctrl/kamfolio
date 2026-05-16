@@ -12,9 +12,9 @@ Eight tightly-scoped phases follow the dependency-ordered build sequence from re
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Scroll Foundation** - Lenis + GSAP wiring, Zustand scroll store, single plugin registration, horizontal track stub
-- [ ] **Phase 2: Moon Hero** - Global canvas, NASA textures, photorealistic moon with entrance animation and DPR cap
-- [ ] **Phase 3: Nebula System** - 6-layer parallax stack, velocity breathe pipeline, particle clusters
+- [x] **Phase 1: Scroll Foundation** - Lenis + GSAP wiring, Zustand scroll store, single plugin registration, horizontal track stub
+- [x] **Phase 2: Moon Hero** - Global canvas, NASA textures, photorealistic moon with entrance animation and DPR cap
+- [x] **Phase 3: Nebula System** - 6-layer parallax stack, velocity breathe pipeline, particle clusters
 - [ ] **Phase 4: Hero Section** - Name fade-in, subtitle typeout, grain overlay, reduced-motion fallback wired
 - [ ] **Phase 5: Project Cards** - Full horizontal track, Green Guardian card, CubeCoach card, placeholder, clipPath entrance, SSR safety
 - [ ] **Phase 6: Personality + Timeline** - Beyond the Code strip, Strikers section, journey timeline with planet nodes
