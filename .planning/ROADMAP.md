@@ -78,7 +78,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The subtitle text types itself out character by character after the name fades in
   3. A CSS grain/scanline texture is visually present over the hero (verified with devtools: `::after` pseudo-element on the overlay)
   4. With `prefers-reduced-motion: reduce` set in OS preferences, all animations stop and a static view renders — no typing, no fade, no scroll effects
-**Plans**: TBD
+**Plans**: 3 plans
+- [ ] 04-01-PLAN.md — Wave 0: geist install, transpilePackages, test stubs
+- [ ] 04-02-PLAN.md — Wave 1: useTypewriter hook, Geist font wiring, film grain CSS
+- [ ] 04-03-PLAN.md — Wave 2: HeroOverlay component, page.tsx mount
 **UI hint**: yes
 
 ### Phase 5: Project Cards
