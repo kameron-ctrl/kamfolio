@@ -37,6 +37,10 @@ export default function HorizontalTrack({
 
   useGSAP(
     () => {
+      // Register here too: React fires child useLayoutEffect before parent,
+      // so LenisProvider's registration hasn't run yet when this callback fires.
+      gsap.registerPlugin(ScrollTrigger);
+
       const section = sectionRef.current;
       const track = trackRef.current;
       if (!section || !track) return;
@@ -55,7 +59,7 @@ export default function HorizontalTrack({
           scrub: 1, // A2 — tunable; 1s catch-up matches Lenis smoothing
           anticipatePin: 1, // A4 — tunable; reduces jitter at pin entry
           invalidateOnRefresh: true, // recalculates x on window resize
-          markers: process.env.NODE_ENV === "development",
+          markers: false,
         },
       });
     },
