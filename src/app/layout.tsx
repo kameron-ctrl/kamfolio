@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import LenisProvider from "@/components/lenis-provider/LenisProvider";
 import MoonSceneClient from "@/components/canvas/MoonScene.client";
@@ -14,11 +16,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body>
         <LenisProvider>
           <MoonSceneClient />
-          <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
+          <div style={{ position: "relative", zIndex: 2 }}>{children}</div>
         </LenisProvider>
       </body>
     </html>

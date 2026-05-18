@@ -9,3 +9,29 @@ body {
   color: #ffffff;
   min-height: 100vh;
 }
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox%3D'0 0 250 250' xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cfilter id%3D'noiseFilter'%3E%3CfeTurbulence type%3D'fractalNoise' baseFrequency%3D'0.85' numOctaves%3D'4' stitchTiles%3D'stitch'%2F%3E%3C%2Ffilter%3E%3Crect width%3D'100%25' height%3D'100%25' filter%3D'url(%23noiseFilter)'%2F%3E%3C%2Fsvg%3E");
+  background-repeat: repeat;
+  background-size: 250px 250px;
+  animation: grain calc(var(--motion-ok) * 0.6s) steps(6) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10%       { transform: translate(-5%, -10%); }
+  30%       { transform: translate(3%, -15%); }
+  50%       { transform: translate(12%, 9%); }
+  70%       { transform: translate(9%, 4%); }
+  90%       { transform: translate(-1%, 7%); }
+}
