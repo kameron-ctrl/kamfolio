@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import LenisProvider from "@/components/lenis-provider/LenisProvider";
 import MoonSceneClient from "@/components/canvas/MoonScene.client";
-import ScrollDebugHUD from "@/components/debug/ScrollDebugHUD";
 
 export const metadata: Metadata = {
   title: "Kameron Benjamin",
@@ -20,7 +19,6 @@ export default function RootLayout({
         <LenisProvider>
           <MoonSceneClient />
           <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
-          <ScrollDebugHUD />
         </LenisProvider>
       </body>
     </html>

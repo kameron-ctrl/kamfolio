@@ -35,7 +35,6 @@ import {
   MOON_ROTATION_PER_FRAME,
   MOON_X_OFFSET,
 } from "./MoonScene.constants";
-import MoonGlow from "./MoonGlow";
 
 /** Sphere radius in Three.js units — 1.5 reads as ~50% viewport height
  *  given camera fov=50 + camera.z=6 (D-05, RESEARCH.md Pattern 4). */
@@ -49,16 +48,16 @@ const MOON_SEGMENTS = 128;
  *  (D-15 Claude's discretion, RESEARCH.md Pattern 4 default). */
 const MOON_DISPLACEMENT_SCALE = 0.08;
 
-/** PointLight sun simulation (D-16 Claude's discretion).
- *  Position upper-left of moon — ~35% shadow on the right hemisphere
- *  (UI-SPEC Lighting table; RESEARCH.md Pattern 8 + Assumption A4). */
+/** DirectionalLight sun simulation — no distance falloff, correct for
+ *  a distant star. Position upper-left of moon gives ~35% shadow on
+ *  the right hemisphere (UI-SPEC Lighting table; RESEARCH.md Pattern 8). */
 const SUN_POSITION: [number, number, number] = [-10, 5, 8];
-const SUN_INTENSITY = 3.0;
+const SUN_INTENSITY = 2.2;
 const SUN_COLOR = "#fff8e8";
 
 /** AmbientLight fill — prevents fully-black shadow side
  *  (RESEARCH.md Pattern 8). */
-const AMBIENT_INTENSITY = 0.05;
+const AMBIENT_INTENSITY = 0.55;
 
 export interface MoonSceneProps {
   /** Called exactly once after the three NASA textures upload to the GPU.
@@ -134,7 +133,7 @@ export default function MoonScene({ onReady }: MoonSceneProps): JSX.Element {
   return (
     <>
       <ambientLight intensity={AMBIENT_INTENSITY} />
-      <pointLight
+      <directionalLight
         position={SUN_POSITION}
         intensity={SUN_INTENSITY}
         color={SUN_COLOR}
@@ -150,9 +149,6 @@ export default function MoonScene({ onReady }: MoonSceneProps): JSX.Element {
           metalness={0.0}
         />
       </mesh>
-      {/* HERO-03: atmospheric glow rim — rendered AFTER moon for
-          correct AdditiveBlending depth order (RESEARCH Pitfall 5). */}
-      <MoonGlow moonRadius={MOON_RADIUS} xOffset={MOON_X_OFFSET} />
     </>
   );
 }

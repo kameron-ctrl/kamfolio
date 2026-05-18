@@ -696,7 +696,7 @@ Object.defineProperty(window, "matchMedia", {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Name fade: GSAP vs CSS transition (Claude's discretion)**
    - What we know: Both work. GSAP `onComplete` naturally gates the typewriter. CSS transition requires `transitionend` listener or a parallel `setTimeout` to gate the typewriter.

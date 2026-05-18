@@ -29,28 +29,9 @@ export default function Page(): JSX.Element {
     <main>
       {/* Vertical zone — represents future hero + nebula content */}
       <section
-        style={{
-          minHeight: "250vh",
-          padding: "4rem 2rem",
-          background:
-            "linear-gradient(180deg, #0a0a1a 0%, #1a1a3e 50%, #2e1a3e 100%)",
-          color: "#ffffff",
-          fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-        }}
+        style={{ minHeight: "250vh" }}
         data-testid="vertical-zone"
-      >
-        <h1 style={{ fontSize: "2rem", letterSpacing: "0.05em" }}>
-          Phase 1 — Scroll Foundation
-        </h1>
-        <p style={{ marginTop: "1rem", maxWidth: "60ch", opacity: 0.7 }}>
-          Scroll down to enter the pinned horizontal zone.
-        </p>
-        <p style={{ marginTop: "1rem", maxWidth: "60ch", opacity: 0.5, fontSize: "0.85rem" }}>
-          Watch the HUD in the top-right: phase should transition
-          vertical → transition → horizontal as you scroll. The inner
-          track will translate leftward when the section pins.
-        </p>
-      </section>
+      />
 
       {/* Horizontal zone — pin + scrub */}
       <HorizontalTrack>

@@ -55,6 +55,8 @@ export default function MoonSceneClient(): JSX.Element {
       >
         <Suspense fallback={null}>
           <NebulaScene />
+        </Suspense>
+        <Suspense fallback={null}>
           <MoonScene onReady={handleReady} />
         </Suspense>
       </Canvas>

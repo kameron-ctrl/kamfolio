@@ -107,8 +107,8 @@ function makeBokehTexture(size: number, blur: number): THREE.CanvasTexture {
 export function createNebulaTextures(): NebulaTextures {
   return {
     star: makeCircleTexture(16, 0.1),
-    nebulaBlob: makeCircleTexture(32, 0.5),
-    bokeh: makeBokehTexture(64, 0.3),
+    nebulaBlob: makeCircleTexture(64, 0.72),
+    bokeh: makeBokehTexture(64, 0.25),
     dustGrain: makeCircleTexture(8, 0.2),
   };
 }

@@ -63,7 +63,7 @@ export const MOON_ROTATION_PER_FRAME = 0.0005;
  * Tunable Claude's discretion — the constant lets us adjust without
  * editing the JSX.
  */
-export const MOON_X_OFFSET = 2.0;
+export const MOON_X_OFFSET = 1.0;
 
 /**
  * Atmospheric glow sphere radius multiplier (D-17).
@@ -72,4 +72,4 @@ export const MOON_X_OFFSET = 2.0;
  * not a bloom effect.
  * Consumed by MoonGlow.tsx in Plan 03.
  */
-export const MOON_GLOW_RADIUS_MULTIPLIER = 1.05;
+export const MOON_GLOW_RADIUS_MULTIPLIER = 1.10;

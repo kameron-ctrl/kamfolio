@@ -30,11 +30,10 @@ const GLOW_SEGMENTS = 32;
 
 /** Glow color — must match --color-moon-glow in src/styles/tokens.css.
  *  Hardcoded as a literal (R3F materials cannot read CSS custom properties). */
-const GLOW_COLOR = "#a0c8ff";
+const GLOW_COLOR = "#b8d4ff";
 
-/** Glow opacity — UI-SPEC locked value; within D-17's 0.15–0.25 band.
- *  Subtle rim, not a bloom effect. */
-const GLOW_OPACITY = 0.18;
+/** Glow opacity — softer at larger radius so rim stays atmospheric. */
+const GLOW_OPACITY = 0.05;
 
 export interface MoonGlowProps {
   /** Radius of the parent moon mesh in Three.js units. */
