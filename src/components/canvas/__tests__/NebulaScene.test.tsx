@@ -66,8 +66,8 @@ describe("NebulaScene constants — NEB-03 (3 clusters: purple, teal, coral)", (
     expect(NEBULA_CLUSTER_COLORS[2]).toBe("#ff6b6b");
   });
 
-  it("desktop cluster particle count is 800 each (D-11 / NEB-03)", () => {
-    expect(NEBULA_DESKTOP_COUNTS.clusterEach).toBe(800);
+  it("desktop cluster particle count is 1500 each (refined from D-11 / NEB-03 for richer depth)", () => {
+    expect(NEBULA_DESKTOP_COUNTS.clusterEach).toBe(1500);
   });
 });
 

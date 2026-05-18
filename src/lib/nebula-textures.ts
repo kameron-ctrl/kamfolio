@@ -8,7 +8,7 @@
  *
  * Sprite contract (UI-SPEC Layer Visual Character):
  *   star       16x16 sharp disc, hard edge  (blur stop 0.1)
- *   nebulaBlob 32x32 soft gaussian blob     (blur stop 0.5)
+ *   nebulaBlob 64x64 soft gaussian blob     (blur stop 0.72)
  *   bokeh      64x64 large soft disc + ring (blur stop 0.3)
  *   dustGrain  8x8 tiny grain               (blur stop 0.2)
  */

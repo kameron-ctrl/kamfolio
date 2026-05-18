@@ -39,10 +39,10 @@ describe("nebula-textures sprite dimensions (UI-SPEC sprite character)", () => {
     expect(img.height).toBe(16);
   });
 
-  it("nebulaBlob sprite is 32x32", () => {
+  it("nebulaBlob sprite is 64x64", () => {
     const img = t.nebulaBlob.image as HTMLCanvasElement;
-    expect(img.width).toBe(32);
-    expect(img.height).toBe(32);
+    expect(img.width).toBe(64);
+    expect(img.height).toBe(64);
   });
 
   it("bokeh sprite is 64x64", () => {

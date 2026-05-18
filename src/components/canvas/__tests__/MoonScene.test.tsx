@@ -57,8 +57,8 @@ describe("MoonScene constants — D-04/D-05 (right-of-center framing)", () => {
 });
 
 describe("MoonScene constants — D-17 (glow rim radius)", () => {
-  it("MOON_GLOW_RADIUS_MULTIPLIER is 1.05 (5% larger than moon)", () => {
-    expect(MOON_GLOW_RADIUS_MULTIPLIER).toBe(1.05);
+  it("MOON_GLOW_RADIUS_MULTIPLIER is 1.10 (10% larger than moon)", () => {
+    expect(MOON_GLOW_RADIUS_MULTIPLIER).toBe(1.10);
   });
 });
 
@@ -95,7 +95,7 @@ describe("MoonGlow — module structure (HERO-03)", () => {
 
   it("MOON_GLOW_RADIUS_MULTIPLIER is the value MoonGlow multiplies moonRadius by", () => {
     // MoonGlow.tsx computes glowRadius = moonRadius * MOON_GLOW_RADIUS_MULTIPLIER.
-    // Locking 1.05 here ensures the glow stays "5% larger" per D-17.
-    expect(MOON_GLOW_RADIUS_MULTIPLIER).toBe(1.05);
+    // Refined to 1.10 (10% larger) during visual polish before Phase 4 — subtle but visible rim glow.
+    expect(MOON_GLOW_RADIUS_MULTIPLIER).toBe(1.10);
   });
 });
