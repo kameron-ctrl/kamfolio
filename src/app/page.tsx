@@ -17,6 +17,7 @@
  * Real card content arrives in Phase 5.
  */
 import HorizontalTrack from "@/components/horizontal-track/HorizontalTrack";
+import HeroOverlay from "@/components/hero/HeroOverlay";
 
 const PLACEHOLDER_SLOTS: ReadonlyArray<{ bg: string; label: string }> = [
   { bg: "#1a1a3e", label: "Placeholder 1" },
@@ -27,11 +28,11 @@ const PLACEHOLDER_SLOTS: ReadonlyArray<{ bg: string; label: string }> = [
 export default function Page(): JSX.Element {
   return (
     <main>
-      {/* Vertical zone — represents future hero + nebula content */}
+      {/* Vertical zone — hero overlay + future nebula content */}
       <section
         style={{ minHeight: "250vh" }}
         data-testid="vertical-zone"
-      />
+      ><HeroOverlay /></section>
 
       {/* Horizontal zone — pin + scrub */}
       <HorizontalTrack>

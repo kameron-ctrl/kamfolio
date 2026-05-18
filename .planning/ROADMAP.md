@@ -78,10 +78,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The subtitle text types itself out character by character after the name fades in
   3. A CSS grain/scanline texture is visually present over the hero (verified with devtools: `::after` pseudo-element on the overlay)
   4. With `prefers-reduced-motion: reduce` set in OS preferences, all animations stop and a static view renders — no typing, no fade, no scroll effects
-**Plans**: 3 plans
-- [x] 04-01-PLAN.md — Wave 0: geist install, transpilePackages, test stubs
-- [x] 04-02-PLAN.md — Wave 1: useTypewriter hook, Geist font wiring, film grain CSS
-- [ ] 04-03-PLAN.md — Wave 2: HeroOverlay component, page.tsx mount
+**Plans:** 3 plans
+  - [x] 04-01-PLAN.md — Wave 0: geist install, transpilePackages, test stubs
+  - [x] 04-02-PLAN.md — Wave 1: useTypewriter hook, Geist font wiring, film grain CSS
+  - [x] 04-03-PLAN.md — Wave 2: HeroOverlay component, page.tsx mount
 **UI hint**: yes
 
 ### Phase 5: Project Cards
@@ -146,7 +146,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 1. Scroll Foundation | 0/4 | Not started | - |
 | 2. Moon Hero | 0/3 | Not started | - |
 | 3. Nebula System | 0/? | Not started | - |
-| 4. Hero Section | 2/3 | In Progress|  |
+| 4. Hero Section | 3/3 | Complete | 2026-05-18 |
 | 5. Project Cards | 0/? | Not started | - |
 | 6. Personality + Timeline | 0/? | Not started | - |
 | 7. Rocket CTA + UI | 0/? | Not started | - |
