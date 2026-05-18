@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 context gathered
-last_updated: "2026-05-18T01:20:28.441Z"
+stopped_at: Completed Phase 4 Plan 3 — HeroOverlay component and page.tsx mount
+last_updated: "2026-05-18T01:25:00Z"
 last_activity: 2026-05-18
 progress:
   total_phases: 8
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 14
-  completed_plans: 13
-  percent: 38
+  completed_plans: 14
+  percent: 50
 ---
 
 # Project State
@@ -25,9 +25,9 @@ See: .planning/PROJECT.md (updated 2026-05-05)
 
 ## Current Position
 
-Phase: 04 (hero-section) — EXECUTING
-Plan: 3 of 3
-Status: Ready to execute
+Phase: 04 (hero-section) — COMPLETE
+Plan: 3 of 3 (all complete)
+Status: Phase 4 complete — ready for Phase 5
 Last activity: 2026-05-18
 
 Progress (planned phases 1-3): [██████████] 100%
@@ -55,6 +55,8 @@ Progress (planned phases 1-3): [██████████] 100%
 
 *Updated after each plan completion*
 | Phase 04-hero-section P01 | 10 | 3 tasks | 5 files |
+| Phase 04-hero-section P02 | 2 | 2 tasks | 3 files |
+| Phase 04-hero-section P03 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -69,6 +71,8 @@ Recent decisions affecting current work:
 - Init: React Three Fiber over vanilla Three.js — declarative 3D integrates cleanly with React/Next.js
 - Init: Single visual direction (no dark/light toggle) — moon/nebula aesthetic is the brand
 - [Phase ?]: transpilePackages: [geist] added to next.config.mjs before any font import to prevent webpack ESM parse error at build time
+- [Phase 04-03]: useGSAP onComplete gates useTypewriter startSignal — cleanest sequencing without parallel setTimeout race
+- [Phase 04-03]: Initial opacity in h1 style prop (not only via GSAP) prevents flash between React render and GSAP initialization
 
 ### Pending Todos
 
@@ -81,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-18T01:20:28.425Z
-Stopped at: Phase 4 context gathered
+Last session: 2026-05-18T01:25:00Z
+Stopped at: Completed Phase 4 Plan 3 (04-03) — HeroOverlay component, page.tsx mount, ROADMAP updated
 Resume file: None
