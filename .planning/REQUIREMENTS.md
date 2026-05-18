@@ -22,9 +22,9 @@
 - [ ] **HERO-03**: Atmospheric glow rim renders as a second slightly-larger sphere with AdditiveBlending
 - [ ] **HERO-04**: On load, moon starts small/distant and lerps toward camera over ~2.5s
 - [ ] **HERO-05**: Moon self-rotates subtly on Y axis (~0.0005/frame)
-- [ ] **HERO-06**: Kameron's name fades in over the moon, large scale, thin letter-spacing
-- [ ] **HERO-07**: Subtitle types itself out with the typing animation
-- [ ] **HERO-08**: CSS grain/scanline overlay renders via `::after` pseudo-element for cinematic texture
+- [x] **HERO-06**: Kameron's name fades in over the moon, large scale, thin letter-spacing
+- [x] **HERO-07**: Subtitle types itself out with the typing animation
+- [x] **HERO-08**: CSS grain/scanline overlay renders via `::after` pseudo-element for cinematic texture
 
 ### Nebula
 
@@ -64,7 +64,7 @@
 
 - [ ] **QUAL-01**: All R3F Canvas components use `next/dynamic` with `{ ssr: false }` — `next build` completes without server-side errors
 - [ ] **QUAL-02**: Site renders usably at 375px with CSS-only moon (radial-gradient + animation) and vertical card stack
-- [ ] **QUAL-03**: `prefers-reduced-motion` disables all animations and shows a static fallback — implemented via `--motion-ok: 1` CSS custom property at `:root`
+- [x] **QUAL-03**: `prefers-reduced-motion` disables all animations and shows a static fallback — implemented via `--motion-ok: 1` CSS custom property at `:root`
 - [ ] **QUAL-04**: Canvas DPR is capped at `[1, 1.5]` — no uncapped retina rendering on mobile
 - [ ] **QUAL-05**: OG image (1200×630 static moon screenshot) and `<title>` / `<meta description>` with recruiter keywords are set correctly
 - [ ] **QUAL-06**: All external links (GitHub, live projects) are verified working before launch
@@ -113,9 +113,9 @@
 | HERO-03 | Phase 2 | Pending |
 | HERO-04 | Phase 2 | Pending |
 | HERO-05 | Phase 2 | Pending |
-| HERO-06 | Phase 4 | Pending |
-| HERO-07 | Phase 4 | Pending |
-| HERO-08 | Phase 4 | Pending |
+| HERO-06 | Phase 4 | Complete |
+| HERO-07 | Phase 4 | Complete |
+| HERO-08 | Phase 4 | Complete |
 | NEB-01 | Phase 3 | Pending |
 | NEB-02 | Phase 3 | Pending |
 | NEB-03 | Phase 3 | Pending |
@@ -140,7 +140,7 @@
 | HIRE-04 | Phase 7 | Pending |
 | QUAL-01 | Phase 5 | Pending |
 | QUAL-02 | Phase 8 | Pending |
-| QUAL-03 | Phase 4 | Pending |
+| QUAL-03 | Phase 4 | Complete |
 | QUAL-04 | Phase 2 | Pending |
 | QUAL-05 | Phase 8 | Pending |
 | QUAL-06 | Phase 8 | Pending |
