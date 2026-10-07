@@ -10,7 +10,7 @@ The horizontal track replaces the three colored placeholder panels. Left to righ
 |---|---|---|
 | Intro | 50vw (720px) | Mono label `SELECTED WORK` + Michroma line `Things I've built`, left-aligned at 8vw, vertically centered |
 | Card 1 | card | Green Guardian |
-| Gap | 40vw (576px) | Empty. Only the background shows (see open question on nebula) |
+| Gap | 40vw (576px) | Empty. Charcoal sky + stars only (nebula clusters stay off — decided) |
 | Card 2 | card | CubeCoach |
 | Gap | 40vw | Empty |
 | Card 3 | card | Placeholder ("in progress") |

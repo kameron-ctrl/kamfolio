@@ -6,7 +6,7 @@ Scope: QUAL-02, QUAL-05, QUAL-06, QUAL-07, plus closing gaps left by the moon-he
 
 | Piece | Rule |
 |---|---|
-| Moon | **(Q)** Default: keep the 3D moon on phones, using the approved mobile rules in `MOON_HERO_SPEC.md` (radius 0.5, offset −0.08, 115% target). Show a CSS-only moon only when WebGL isn't available or the device reports `navigator.hardwareConcurrency ≤ 4` and `deviceMemory ≤ 4`. CSS moon: a circle 115vw wide with `radial-gradient(circle at 50% 35%, #d9d6c8 0%, #8f8c84 45%, #2a2a2c 75%)` plus an outer glow `box-shadow: 0 0 80px 10px rgba(160,200,255,0.18)`, rising 4vh over 1.2s (same as the 3D entrance). |
+| Moon | **Decided:** keep the 3D moon on phones, using the approved mobile rules in `MOON_HERO_SPEC.md` (radius 0.5, offset −0.08, 115% target). Show a CSS-only moon only when WebGL isn't available or the device reports `navigator.hardwareConcurrency ≤ 4` and `deviceMemory ≤ 4`. CSS moon: a circle 115vw wide with `radial-gradient(circle at 50% 35%, #d9d6c8 0%, #8f8c84 45%, #2a2a2c 75%)` plus an outer glow `box-shadow: 0 0 80px 10px rgba(160,200,255,0.18)`, rising 4vh over 1.2s (same as the 3D entrance). |
 | Sections | Use the stacked layouts in the Phase 5–7 specs. Test widths: 320, 375, 768, 1024, 1440, 1920. No horizontal scroll at any of them (`document.documentElement.scrollWidth === innerWidth`). |
 | Touch | Every tap target is ≥ 44×44px. |
 
