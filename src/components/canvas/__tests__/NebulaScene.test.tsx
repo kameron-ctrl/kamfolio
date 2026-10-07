@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
   NEBULA_LAYERS,
-  NEBULA_CLUSTER_COLORS,
   NEBULA_STAR_COLOR,
   NEBULA_BREATHE_MAX,
   NEBULA_BREATHE_VELOCITY_SCALE,
@@ -13,17 +12,10 @@ import {
   NEBULA_L1_GRADIENT,
 } from "@/components/canvas/NebulaScene.constants";
 
-describe("NebulaScene constants — NEB-01 (6-layer stack: 5 particle layers + CSS L1)", () => {
-  it("NEBULA_LAYERS has exactly 5 entries (layers 2-6; layer 1 is CSS)", () => {
-    expect(NEBULA_LAYERS).toHaveLength(5);
-  });
-
-  it("layer names in order: stars, farNebula, midFog, nearBokeh, fgDust", () => {
-    expect(NEBULA_LAYERS.map((l) => l.name)).toEqual([
+describe("NebulaScene constants — background composition", () => {
+  it("omits colored nebula and bokeh layers", () => {
+    expect(NEBULA_LAYERS.map((layer) => layer.name)).toEqual([
       "stars",
-      "farNebula",
-      "midFog",
-      "nearBokeh",
       "fgDust",
     ]);
   });
@@ -34,10 +26,10 @@ describe("NebulaScene constants — NEB-01 (6-layer stack: 5 particle layers + C
   });
 });
 
-describe("NebulaScene constants — NEB-02 (distinct parallax coefficients 0.05x → 0.8x)", () => {
-  it("coefficients match D-09 exactly: [0.05, 0.15, 0.3, 0.6, 0.8]", () => {
-    expect(NEBULA_LAYERS.map((l) => l.coefficient)).toEqual([
-      0.05, 0.15, 0.3, 0.6, 0.8,
+describe("NebulaScene constants — parallax coefficients", () => {
+  it("keeps the star and dust parallax coefficients", () => {
+    expect(NEBULA_LAYERS.map((layer) => layer.coefficient)).toEqual([
+      0.05, 0.8,
     ]);
   });
 
@@ -52,22 +44,6 @@ describe("NebulaScene constants — NEB-02 (distinct parallax coefficients 0.05x
   it("NEBULA_H_PARALLAX_RANGE is between 8 and 15 world units (Pitfall 4)", () => {
     expect(NEBULA_H_PARALLAX_RANGE).toBeGreaterThanOrEqual(8);
     expect(NEBULA_H_PARALLAX_RANGE).toBeLessThanOrEqual(15);
-  });
-});
-
-describe("NebulaScene constants — NEB-03 (3 clusters: purple, teal, coral)", () => {
-  it("NEBULA_CLUSTER_COLORS has exactly 3 entries", () => {
-    expect(NEBULA_CLUSTER_COLORS).toHaveLength(3);
-  });
-
-  it("colors are exactly #7b4fa6, #2ec4b6, #ff6b6b", () => {
-    expect(NEBULA_CLUSTER_COLORS[0]).toBe("#7b4fa6");
-    expect(NEBULA_CLUSTER_COLORS[1]).toBe("#2ec4b6");
-    expect(NEBULA_CLUSTER_COLORS[2]).toBe("#ff6b6b");
-  });
-
-  it("desktop cluster particle count is 1500 each (refined from D-11 / NEB-03 for richer depth)", () => {
-    expect(NEBULA_DESKTOP_COUNTS.clusterEach).toBe(1500);
   });
 });
 
@@ -106,14 +82,14 @@ describe("NebulaScene constants — NEB-05 (star field 0.05x parallax)", () => {
 });
 
 describe("NebulaScene constants — render order (D-02: moon at 4, layers split)", () => {
-  it("layers behind moon (renderOrder < 4): stars, farNebula, midFog", () => {
+  it("keeps only the stars behind the moon", () => {
     const behind = NEBULA_LAYERS.filter((l) => l.renderOrder < 4);
-    expect(behind.map((l) => l.name)).toEqual(["stars", "farNebula", "midFog"]);
+    expect(behind.map((l) => l.name)).toEqual(["stars"]);
   });
 
-  it("layers in front of moon (renderOrder > 4): nearBokeh, fgDust", () => {
+  it("keeps dust in front of the moon", () => {
     const front = NEBULA_LAYERS.filter((l) => l.renderOrder > 4);
-    expect(front.map((l) => l.name)).toEqual(["nearBokeh", "fgDust"]);
+    expect(front.map((l) => l.name)).toEqual(["fgDust"]);
   });
 
   it("no layer uses renderOrder 4 (reserved for moon per D-02)", () => {

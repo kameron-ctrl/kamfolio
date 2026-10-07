@@ -31,9 +31,6 @@ export interface NebulaLayer {
  */
 export const NEBULA_LAYERS: readonly NebulaLayer[] = [
   { name: "stars",     coefficient: 0.05, z: -2.0, renderOrder: 1, textureKey: "star",       opacity: 0.95, particleSize: 0.025 },
-  { name: "farNebula", coefficient: 0.15, z: -1.5, renderOrder: 2, textureKey: "nebulaBlob", opacity: 0.28, particleSize: 0.28  },
-  { name: "midFog",    coefficient: 0.30, z: -1.0, renderOrder: 3, textureKey: "nebulaBlob", opacity: 0.10, particleSize: 0.38  },
-  { name: "nearBokeh", coefficient: 0.60, z:  0.5, renderOrder: 5, textureKey: "bokeh",      opacity: 0.18, particleSize: 1.20  },
   { name: "fgDust",    coefficient: 0.80, z:  1.0, renderOrder: 6, textureKey: "dustGrain",  opacity: 0.10, particleSize: 0.030 },
 ] as const;
 

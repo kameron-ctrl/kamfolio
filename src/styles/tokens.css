@@ -4,6 +4,10 @@
   --color-void: oklch(8% 0.01 260);
   --color-moon-glow: #a0c8ff;
 
+  /* Moon hero sky — docs/specs/moon-hero/MOON_HERO_SPEC.md */
+  --color-sky-top: #1c1c1f;
+  --color-sky-bottom: #08080a;
+
   /* Nebula palette — declared now, consumed in Phase 3 (NEB-03) */
   --color-nebula-purple: #7b4fa6;
   --color-nebula-teal: #2ec4b6;

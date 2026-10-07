@@ -1,0 +1,330 @@
+<title>Moonrise Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=Geist:wght@400;500&family=Geist+Mono:wght@400&display=swap">
+<style>
+/* Layout: headline, then a full-width 1:1.2 "moon target" box; a fixed WebGL canvas draws a huge sphere tracking that box, so only its upper cap rises into the first screen */
+:root {
+  --space-top: #1c1c1f;
+  --space-bottom: #08080a;
+  --ink: #f1ede4;
+  --muted: #9b978e;
+  --line: rgba(241, 237, 228, .14);
+  --glass: rgba(8, 8, 10, .55);
+  --title-a: #9a9a99;
+  --title-b: #f1f0e0;
+  --display: "Michroma", "Eurostile", "Arial Black", sans-serif;
+  --body: "Geist", system-ui, -apple-system, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--space-bottom); }
+body {
+  background: radial-gradient(120% 70% at 50% 0%, var(--space-top) 0%, var(--space-bottom) 75%) fixed, var(--space-bottom);
+  color: var(--ink); font: 400 16px/1.6 var(--body); overflow-x: hidden;
+}
+
+#sky { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; pointer-events: none; }
+main { position: relative; z-index: 1; overflow-x: clip; }
+
+.hero { padding-top: clamp(120px, 23vh, 212px); }
+.hero h1 {
+  margin: 0; padding-inline: 16px; text-align: center; white-space: pre-line;
+  font: 400 clamp(36px, 6.25vw, 96px)/.86 var(--display); letter-spacing: -.02em; text-transform: uppercase;
+  background: linear-gradient(180deg, var(--title-a) 0%, var(--title-b) 75%, var(--title-a) 156%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; text-wrap: balance;
+}
+.hero .sub { margin: 22px auto 0; text-align: center; font: 400 12px/1.5 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); padding-inline: 16px; }
+
+/* The moon follows this box. Same proportions as the reference: full width, 1:1.2 */
+.target-wrap { position: relative; margin-top: 10px; }
+#moon-target { width: 100%; aspect-ratio: 1 / 1.2; position: relative; }
+@media (max-width: 767px) {
+  .target-wrap { width: 115%; margin-left: -7.5%; margin-top: 80px; }
+}
+
+.notes { position: absolute; left: 0; right: 0; bottom: 8%; padding-inline: 20px; }
+.notes .col { max-width: 640px; margin-inline: auto; display: grid; gap: 24px; background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 4px; padding: 30px 26px; }
+@media (max-width: 767px) { .notes { padding-inline: calc(7.5% / 1.15 + 16px); } }
+.notes h2 { margin: 0; font: 400 18px/1.3 var(--display); text-transform: uppercase; letter-spacing: .02em; }
+.notes p { margin: 0; max-width: 62ch; color: #d6d2c8; }
+.notes dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 12px 20px; }
+.notes dt { font: 400 11px/1.9 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.notes dd { margin: 0; min-width: 0; color: #d6d2c8; }
+@media (max-width: 520px) { .notes dl { grid-template-columns: 1fr; gap: 2px 0; } .notes dd { margin-bottom: 10px; } }
+.tail { height: 30vh; }
+
+.dock {
+  position: fixed; z-index: 2; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--glass);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.dock button { font: 400 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); background: transparent; border: 0; border-radius: 999px; padding: 9px 14px; cursor: pointer; }
+.dock button[aria-pressed="true"] { background: var(--ink); color: #000; }
+.dock button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.readout { position: fixed; z-index: 2; left: 16px; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); font: 400 11px/1 var(--mono); letter-spacing: .1em; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) { .readout { display: none; } }
+</style>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<main>
+  <section class="hero">
+    <h1>Building what
+comes next</h1>
+    <p class="sub">Kameron · Computer Science · Florida A&amp;M '27</p>
+    <div class="target-wrap">
+      <div id="moon-target" role="img" aria-label="A large moon rising below the headline">
+        <div class="notes">
+          <div class="col">
+            <h2>What makes it look 3D</h2>
+            <p>The moon is a real sphere in a fixed WebGL canvas, sized and placed from an invisible box under the headline. These are the same proportions as the nasaforce.gov hero, rebuilt from scratch with your textures.</p>
+            <dl>
+              <dt>Scale</dt><dd>Radius is 30% of the box height (50% on phones). The box is full width and 1.2× as tall, so the sphere is wider than the screen and only its top cap shows.</dd>
+              <dt>Camera</dt><dd>A 45° lens two units from a sphere almost one unit in radius. Being that close bends the horizon and makes tilting read as real depth.</dd>
+              <dt>Light</dt><dd>Mostly backlit: a dim front fill brings out the craters from your height map, and a bright limb wraps the edge.</dd>
+              <dt>Gaze</dt><dd>The sphere tilts toward your cursor and eases there. Quick sideways moves add a small roll.</dd>
+              <dt>Scroll</dt><dd>As the box passes through the screen, the moon drifts slower than the page, a diagonal shadow lifts off its face, it tips forward, and the halo brightens.</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="tail"></div>
+</main>
+
+<div class="readout" id="readout">REVEAL 0%</div>
+<div class="dock" role="group" aria-label="Moon surface texture">
+  <button type="button" id="tex-color" aria-pressed="true">Color</button>
+  <button type="button" id="tex-gray" aria-pressed="false">Grayscale</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  const canvas = document.getElementById('sky');
+  const target = document.getElementById('moon-target');
+  const readout = document.getElementById('readout');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const easeOut = x => 1 - Math.pow(1 - x, 3);
+  const ease = (k, dt) => 1 - Math.pow(1 - k, dt / 16.67); // per-60fps-frame factor, frame-rate independent
+
+  if (!window.THREE) return;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, premultipliedAlpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.05, 100);
+  camera.position.z = 2;
+
+  const loader = new THREE.TextureLoader();
+  const tex = { color: loader.load('moon-color.jpg'), gray: loader.load('moon-gray.jpg'), height: loader.load('moon-height.jpg') };
+  Object.values(tex).forEach(t => { t.anisotropy = renderer.capabilities.getMaxAnisotropy(); t.wrapS = THREE.RepeatWrapping; });
+
+  // ---------- Stars ----------
+  const STARS = 1400;
+  const sPos = new Float32Array(STARS * 3), sSeed = new Float32Array(STARS), sSize = new Float32Array(STARS);
+  for (let i = 0; i < STARS; i++) {
+    sPos[i * 3] = (Math.random() - .5) * 14;
+    sPos[i * 3 + 1] = (Math.random() - .5) * 9;
+    sPos[i * 3 + 2] = -3 - Math.random() * 3;
+    sSeed[i] = Math.random() * 100;
+    sSize[i] = Math.random() < .93 ? .8 + Math.random() * 1.2 : 2 + Math.random() * 1.6;
+  }
+  const starGeo = new THREE.BufferGeometry();
+  starGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+  starGeo.setAttribute('aSeed', new THREE.BufferAttribute(sSeed, 1));
+  starGeo.setAttribute('aSize', new THREE.BufferAttribute(sSize, 1));
+  const starMat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms: { uTime: { value: 0 }, uDpr: { value: renderer.getPixelRatio() }, uFade: { value: 0 } },
+    vertexShader: `
+      attribute float aSeed; attribute float aSize;
+      uniform float uTime; uniform float uDpr; varying float vLight;
+      void main() {
+        vLight = 0.35 + 0.65 * (0.5 + 0.5 * sin(uTime * (0.5 + fract(aSeed) * 1.5) + aSeed));
+        gl_PointSize = aSize * uDpr;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }`,
+    fragmentShader: `
+      uniform float uFade; varying float vLight;
+      void main() {
+        float a = smoothstep(0.5, 0.0, length(gl_PointCoord - 0.5)) * vLight * uFade * 0.85;
+        gl_FragColor = vec4(vec3(0.93, 0.94, 1.0) * a, a);
+      }`
+  });
+  const stars = new THREE.Points(starGeo, starMat);
+  scene.add(stars);
+
+  // ---------- Moon ----------
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const moonMat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms: {
+      tAlbedo: { value: tex.color }, tHeight: { value: tex.height },
+      uTexel: { value: new THREE.Vector2(1 / 2048, 1 / 1024) },
+      uBump: { value: 4.0 }, uReveal: { value: 0.5 }, uAlpha: { value: 0 }
+    },
+    vertexShader: `
+      varying vec2 vUv; varying vec3 vN; varying vec3 vT; varying vec3 vB; varying vec3 vView;
+      void main() {
+        vUv = uv;
+        vec3 t = normalize(vec3(position.z, 0.0, -position.x) + 1e-5); // along +u (longitude)
+        vN = normalize(normalMatrix * normal);
+        vT = normalize(normalMatrix * t);
+        vB = normalize(cross(vN, vT));                                   // along +v (latitude)
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        vView = -mv.xyz;
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader: `
+      uniform sampler2D tAlbedo; uniform sampler2D tHeight;
+      uniform vec2 uTexel; uniform float uBump; uniform float uReveal; uniform float uAlpha;
+      varying vec2 vUv; varying vec3 vN; varying vec3 vT; varying vec3 vB; varying vec3 vView;
+      void main() {
+        vec3 albedo = texture2D(tAlbedo, vUv).rgb;
+        float hl = texture2D(tHeight, vUv - vec2(uTexel.x, 0.0)).r;
+        float hr = texture2D(tHeight, vUv + vec2(uTexel.x, 0.0)).r;
+        float hd = texture2D(tHeight, vUv - vec2(0.0, uTexel.y)).r;
+        float hu = texture2D(tHeight, vUv + vec2(0.0, uTexel.y)).r;
+        vec3 N = normalize(vN);
+        vec3 Nb = normalize(N - uBump * ((hr - hl) * normalize(vT) + (hu - hd) * normalize(vB)));
+        vec3 V = normalize(vView);
+
+        // Soft front fill (shows crater relief) + strong limb from the backlight
+        float fill = 0.13 + 0.30 * max(dot(Nb, normalize(vec3(-0.35, 0.3, 0.55))), 0.0);
+        float ndv = max(dot(N, V), 0.0);
+        float limb = pow(1.0 - ndv, 2.8) * 1.4;
+        vec3 col = albedo * fill + albedo * limb * vec3(0.95, 0.92, 0.85);
+
+        // Diagonal reveal: lit from the top-right first, shadow clears toward the bottom-left
+        float s = (N.x + N.y) * 0.25 + 0.5;
+        float edge = uReveal * 1.4 - 0.2;
+        col *= smoothstep(edge - 0.25, edge + 0.25, s);
+
+        gl_FragColor = vec4(col * uAlpha, uAlpha);
+      }`
+  });
+  const moon = new THREE.Mesh(new THREE.SphereGeometry(1, 160, 80), moonMat);
+  moon.renderOrder = 2;
+  group.add(moon);
+
+  // Halo quad behind the sphere; r is in moon radii (quad spans 5.5 radii)
+  const haloMat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms: { uStrength: { value: 0 } },
+    vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+    fragmentShader: `
+      uniform float uStrength; varying vec2 vUv;
+      void main() {
+        float r = length(vUv - 0.5) * 5.5;
+        float ring = exp(-pow((r - 1.0) / 0.06, 2.0)) * 0.5;
+        float haze = exp(-pow(max(r - 0.96, 0.0) * 1.5, 2.0)) * 0.2;
+        float a = (ring + haze) * (1.0 - smoothstep(2.0, 2.75, r)) * uStrength;
+        gl_FragColor = vec4(vec3(0.95, 0.92, 0.85) * a, a);
+      }`
+  });
+  const halo = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 5.5), haloMat);
+  halo.renderOrder = 1;
+  scene.add(halo); // not parented, so it always faces the camera
+
+  // ---------- Sizing ----------
+  let viewH = 1, viewW = 1, docTop = 0, boxH = 0, boxCx = 0;
+  function measure() {
+    const r = target.getBoundingClientRect();
+    docTop = r.top + scrollY; boxH = r.height; boxCx = r.left + r.width / 2;
+  }
+  function resize() {
+    renderer.setSize(innerWidth, innerHeight, false);
+    camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+    viewH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+    viewW = viewH * camera.aspect;
+    measure();
+  }
+  resize();
+  addEventListener('resize', resize);
+  document.fonts && document.fonts.ready.then(measure);
+
+  // ---------- Pointer gaze ----------
+  const pointer = { nx: 0, ny: 0, x: 0, lastX: 0 };
+  const gaze = { x: 0, y: 0, rollTarget: 0, roll: 0 };
+  addEventListener('pointermove', e => {
+    pointer.nx = e.clientX / innerWidth * 2 - 1;
+    pointer.ny = -(e.clientY / innerHeight * 2 - 1);
+    pointer.x = e.clientX;
+  });
+
+  // ---------- Texture toggle ----------
+  const bColor = document.getElementById('tex-color'), bGray = document.getElementById('tex-gray');
+  function useTex(name) {
+    moonMat.uniforms.tAlbedo.value = tex[name];
+    bColor.setAttribute('aria-pressed', String(name === 'color'));
+    bGray.setAttribute('aria-pressed', String(name === 'gray'));
+  }
+  bColor.addEventListener('click', () => useTex('color'));
+  bGray.addEventListener('click', () => useTex('gray'));
+
+  // ---------- Loop ----------
+  const start = performance.now();
+  let last = start;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    const dt = Math.min(64, now - last); last = now;
+    const t = (now - start) / 1000;
+    const vw = innerWidth, vh = innerHeight, sy = scrollY, mobile = vw < 768;
+
+    const enter = easeOut(clamp((t - 0.4) / 1.2, 0, 1));
+    moonMat.uniforms.uAlpha.value = enter;
+    starMat.uniforms.uFade.value = easeOut(clamp(t / 1.2, 0, 1));
+    starMat.uniforms.uTime.value = t;
+
+    // Where the target box is on screen, and how far it has travelled through the viewport (0..1)
+    const top = docTop - sy, bottom = top + boxH;
+    const visible = bottom + vh * .5 > 0 && top - vh * .5 < vh;
+    const travel = clamp((sy + vh - docTop) / (boxH + vh), 0, 1);
+    const reveal = 0.5 * (1 - travel);
+
+    // Size: radius = 30% of the box height (50% on phones), in world units
+    const radius = viewH * (boxH / vh) * (mobile ? 0.5 : 0.3);
+    group.scale.setScalar(radius);
+
+    // Position: box centre, nudged up 18% of the view (down 8% on phones), slow parallax, entrance rise
+    const cy = top + boxH / 2;
+    const parallax = (travel - 0.5) * viewH * (boxH / vh) * -0.15;
+    const offset = mobile ? -viewH * 0.08 : viewH * 0.18;
+    const rise = -(1 - enter) * viewH * 0.04;
+    group.position.x = viewW * (boxCx / vw - 0.5);
+    group.position.y = -viewH * (cy / vh - 0.5) + parallax + offset + rise;
+    group.visible = visible;
+
+    // Gaze: ease toward the cursor; roll from fast sideways motion
+    const m = reduce ? 0 : 1;
+    gaze.x += (pointer.nx * 0.6 * m - gaze.x) * ease(0.05, dt);
+    gaze.y += (pointer.ny * 0.4 * m - gaze.y) * ease(0.05, dt);
+    const vx = (pointer.x - pointer.lastX) / dt; pointer.lastX = pointer.x;
+    const kick = Math.sign(vx) * Math.min(Math.abs(vx) / 1.2, 1) * THREE.MathUtils.degToRad(1.5) * m;
+    gaze.rollTarget += (kick - gaze.rollTarget) * ease(0.02, dt);
+    gaze.roll += (gaze.rollTarget - gaze.roll) * ease(0.07, dt);
+    group.rotation.set(-gaze.y * 0.1, gaze.x * 0.15, gaze.roll * 0.4);
+    stars.rotation.set(-gaze.y * 0.02, gaze.x * 0.03, 0);
+
+    // Spin, scroll tilt, reveal, halo
+    moon.rotation.y = -Math.PI / 2 + (reduce ? 0 : t * 0.04);
+    moon.rotation.x = (1 - reveal) * 0.4;
+    moonMat.uniforms.uReveal.value = reveal;
+    halo.position.set(group.position.x, group.position.y, -0.6 * radius);
+    halo.scale.setScalar(radius);
+    halo.visible = visible;
+    haloMat.uniforms.uStrength.value = Math.pow(1 - reveal, 3) * enter;
+
+    readout.textContent = `REVEAL ${Math.round((1 - reveal * 2) * 100)}%  ·  GAZE ${gaze.x.toFixed(2)}, ${gaze.y.toFixed(2)}`;
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
