@@ -1,8 +1,5 @@
-import { Michroma } from 'next/font/google';
+import { display } from '@/lib/fonts';
 import MoonTarget from './MoonTarget';
-
-// Closest free match to the reference's Microgramma Extended Bold.
-const display = Michroma({ subsets: ['latin'], weight: '400', display: 'swap' });
 
 /**
  * Hero markup: silver headline + the box the moon tracks.

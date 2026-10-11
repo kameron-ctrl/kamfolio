@@ -62,3 +62,44 @@ export function computePhase(rawProgress: number): {
   }
   return { phase: "horizontal", progress: clamp01((clamped - 0.55) / 0.45) };
 }
+
+/** Scroll positions (px) where the horizontal track's pin starts and ends. */
+export interface TrackRange {
+  start: number;
+  end: number;
+}
+
+let trackRange: TrackRange | null = null;
+
+/** HorizontalTrack publishes its pin range here on every ScrollTrigger refresh; null when unpinned (mobile). */
+export function setTrackRange(range: TrackRange | null): void {
+  trackRange = range;
+}
+
+export function getTrackRange(): TrackRange | null {
+  return trackRange;
+}
+
+/**
+ * Phase from the real pin range instead of fixed page fractions, which drift
+ * as soon as the track's length changes. Transition = the viewport-height
+ * window right before the pin engages.
+ */
+export function computePhaseFromRange(
+  scrollY: number,
+  range: TrackRange,
+  viewportH: number
+): { phase: ScrollPhase; progress: number } {
+  const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+  const transitionStart = Math.max(0, range.start - viewportH);
+
+  if (scrollY >= range.start) {
+    const span = range.end - range.start;
+    return { phase: "horizontal", progress: span > 0 ? clamp01((scrollY - range.start) / span) : 1 };
+  }
+  if (scrollY >= transitionStart) {
+    const span = range.start - transitionStart;
+    return { phase: "transition", progress: span > 0 ? clamp01((scrollY - transitionStart) / span) : 1 };
+  }
+  return { phase: "vertical", progress: clamp01(scrollY / transitionStart) };
+}

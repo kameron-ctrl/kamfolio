@@ -8,6 +8,15 @@
   --color-sky-top: #1c1c1f;
   --color-sky-bottom: #08080a;
 
+  /* Silver type + surfaces — values from the MoonHero headline (docs/specs/project-cards) */
+  --color-silver: #f1f0e0;
+  --color-silver-dim: #9a9a99;
+  --color-text-muted: #9b978e;
+  --color-text-body: rgba(241, 240, 224, 0.78);
+  --color-surface: rgba(241, 240, 224, 0.03);
+  --color-hairline: rgba(241, 240, 224, 0.12);
+  --gradient-silver: linear-gradient(180deg, #9a9a99 0%, #f1f0e0 75%, #9a9a99 156%);
+
   /* Nebula palette — declared now, consumed in Phase 3 (NEB-03) */
   --color-nebula-purple: #7b4fa6;
   --color-nebula-teal: #2ec4b6;

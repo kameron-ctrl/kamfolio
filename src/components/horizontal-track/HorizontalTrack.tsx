@@ -8,24 +8,25 @@
  *   "don't animate the pinned element itself because that will throw off
  *    the measurements." The section is pinned; the track moves.
  *
- * StrictMode safety (D-05, Pitfall 3): ScrollTrigger registration runs
- * inside `useGSAP` from @gsap/react, which wraps gsap.context() and
- * auto-reverts on the second StrictMode invoke without leaking triggers.
+ * Desktop only (docs/specs/project-cards): under 768px gsap.matchMedia skips
+ * the pin and the track stacks vertically via CSS.
  *
- * Lenis sync (FOUND-04): this trigger is created AFTER LenisProvider has
- * called `lenis.on('scroll', ScrollTrigger.update)` (LenisProvider mounts
- * higher in the tree and runs its useLayoutEffect before this client
- * component's useGSAP). That bridge means the trigger fires at Lenis's
- * `animatedScroll` offsets, not native window.scrollY.
+ * Children get the scrub tween through TrackContext so their own triggers can
+ * use `containerAnimation`. The pin's start/end scroll positions are
+ * published to the scroll store so phase/progress follow the real pin range.
  *
- * Phase 5 reminder (Pitfall 6): if any pin trigger is killed (e.g., when
- * cards are conditionally remounted), call `ScrollTrigger.refresh()`
- * afterward to clear the pinSpacer blank-space artifact. Phase 1 never
- * kills this trigger, so the issue does not manifest here.
+ * StrictMode safety (D-05, Pitfall 3): everything runs inside `useGSAP`,
+ * which reverts the matchMedia (and its tween + trigger) on unmount.
+ *
+ * Lenis sync (FOUND-04): LenisProvider bridges `lenis.on('scroll',
+ * ScrollTrigger.update)`, so this trigger fires at Lenis offsets.
  */
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap, { ScrollTrigger } from "@/lib/gsap";
+import { setTrackRange } from "@/lib/scroll-store";
+import { DESKTOP_QUERY } from "@/lib/reduced-motion";
+import { TrackContext, type TrackContextValue } from "./track-context";
 
 export default function HorizontalTrack({
   children,
@@ -34,6 +35,7 @@ export default function HorizontalTrack({
 }): JSX.Element {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const [track, setTrack] = useState<TrackContextValue>({ mode: "pending", tween: null });
 
   useGSAP(
     () => {
@@ -42,47 +44,64 @@ export default function HorizontalTrack({
       gsap.registerPlugin(ScrollTrigger);
 
       const section = sectionRef.current;
-      const track = trackRef.current;
-      if (!section || !track) return;
+      const trackEl = trackRef.current;
+      if (!section || !trackEl) return;
 
-      // Compute horizontal travel as a function so it re-evaluates on resize
-      const getDistance = (): number => track.scrollWidth - window.innerWidth;
+      const mm = gsap.matchMedia();
 
-      gsap.to(track, {
-        x: () => -getDistance(),
-        ease: "none", // REQUIRED for scrub — must be linear
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: () => `+=${getDistance()}`,
-          pin: true,
-          scrub: 1, // A2 — tunable; 1s catch-up matches Lenis smoothing
-          anticipatePin: 1, // A4 — tunable; reduces jitter at pin entry
-          invalidateOnRefresh: true, // recalculates x on window resize
-          markers: false,
-        },
+      mm.add(DESKTOP_QUERY, () => {
+        // Re-evaluated on refresh so resize recomputes the travel
+        const getDistance = (): number => trackEl.scrollWidth - window.innerWidth;
+
+        const tween = gsap.to(trackEl, {
+          x: () => -getDistance(),
+          ease: "none", // REQUIRED for scrub — must be linear
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => `+=${getDistance()}`,
+            pin: true,
+            scrub: 1, // 1s catch-up matches Lenis smoothing
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onRefresh: (self) => setTrackRange({ start: self.start, end: self.end }),
+          },
+        });
+
+        const st = tween.scrollTrigger;
+        if (st) setTrackRange({ start: st.start, end: st.end });
+        setTrack({ mode: "horizontal", tween });
+
+        return () => {
+          setTrackRange(null);
+          setTrack({ mode: "pending", tween: null });
+        };
       });
+
+      mm.add(`not ${DESKTOP_QUERY}`, () => {
+        setTrack({ mode: "vertical", tween: null });
+      });
+
+      return () => mm.revert();
     },
     { scope: sectionRef },
   );
 
   return (
-    <section
-      ref={sectionRef}
-      style={{ overflow: "hidden" }}
-      data-testid="horizontal-track-section"
-    >
-      <div
-        ref={trackRef}
-        style={{
-          display: "flex",
-          width: "max-content",
-          willChange: "transform",
-        }}
-        data-testid="horizontal-track-inner"
+    <TrackContext.Provider value={track}>
+      <section
+        ref={sectionRef}
+        className="relative overflow-hidden"
+        data-testid="horizontal-track-section"
       >
-        {children}
-      </div>
-    </section>
+        <div
+          ref={trackRef}
+          className="flex flex-col md:w-max md:flex-row md:[will-change:transform]"
+          data-testid="horizontal-track-inner"
+        >
+          {children}
+        </div>
+      </section>
+    </TrackContext.Provider>
   );
 }

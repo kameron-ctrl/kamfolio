@@ -18,7 +18,12 @@ import { useLayoutEffect, useRef } from "react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import gsap, { ScrollTrigger } from "@/lib/gsap";
-import { useScrollStore, computePhase } from "@/lib/scroll-store";
+import {
+  useScrollStore,
+  computePhase,
+  computePhaseFromRange,
+  getTrackRange,
+} from "@/lib/scroll-store";
 
 export default function LenisProvider({
   children,
@@ -67,8 +72,13 @@ export default function LenisProvider({
           "[LenisProvider] document.body.scrollHeight <= window.innerHeight — phase tracking disabled. Check layout min-heights."
         );
       }
+      // Prefer the real pin range (published by HorizontalTrack); fall back to
+      // fixed page fractions when the track is unpinned (mobile) or not yet measured.
+      const range = getTrackRange();
       const rawProgress = total > 0 ? lenisInstance.animatedScroll / total : 0;
-      const { phase, progress } = computePhase(rawProgress);
+      const { phase, progress } = range
+        ? computePhaseFromRange(lenisInstance.animatedScroll, range, window.innerHeight)
+        : computePhase(rawProgress);
 
       // velocity MUST always be included here — omitting it causes displayVelocity
       // to lerp toward stale stored velocity rather than the current scroll velocity.

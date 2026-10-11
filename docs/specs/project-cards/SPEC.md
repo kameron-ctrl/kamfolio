@@ -18,7 +18,7 @@ The horizontal track replaces the three colored placeholder panels. Left to righ
 
 **Card frame:** `width: min(62vw, 920px)` (893px), `height: min(70vh, 640px)` (630px), vertically centered. Two columns: media 56% / text 44%, 40px inner padding, 32px column gap. Background `--color-surface` (`rgba(241,240,224,0.03)`), 1px border `--color-hairline` (`rgba(241,240,224,0.12)`), radius 4px, `backdrop-filter: blur(6px)`.
 
-**Text column, top to bottom:** mono index `01 / 03` (11px, tracking 0.18em, `--color-text-muted`), title in Michroma 40px / 1.0 with the headline's silver gradient, description in Geist Sans 16px/1.55 `rgba(241,240,224,0.78)` (max 3 sentences), tech pills (mono 11px uppercase, tracking 0.14em, 6px×12px padding, 1px hairline border, radius 999px, gap 8px), then links `Live ↗` and `GitHub ↗` (Geist Sans 14px, underline offset 4px; hover turns the underline teal over 150ms). A link with no URL is not rendered.
+**Text column, top to bottom:** mono index `01 / 03` (11px, tracking 0.18em, `--color-text-muted`), title in Michroma `clamp(28px, 2.5vw, 40px)` / 1.0 (36px at 1440; 40px overflowed "CUBECOACH") with the headline's silver gradient, description in Geist Sans 16px/1.55 `rgba(241,240,224,0.78)` (max 3 sentences), tech pills (mono 11px uppercase, tracking 0.14em, 6px×12px padding, 1px hairline border, radius 999px, gap 8px), then links `Live ↗` and `GitHub ↗` (Geist Sans 14px, underline offset 4px; hover turns the underline teal over 150ms). A link with no URL is not rendered.
 
 **Tokens to add to `tokens.css`** (values taken from MoonHero): `--color-silver: #f1f0e0`, `--color-silver-dim: #9a9a99`, `--color-text-muted: #9b978e`, `--color-surface`, `--color-hairline` (above).
 

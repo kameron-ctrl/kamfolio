@@ -32,6 +32,7 @@ import { MOON_DPR_CAP } from "./MoonScene.constants";
 
 const MoonScene = dynamic(() => import("@/components/moon/MoonScene"), { ssr: false });
 const NebulaScene = dynamic(() => import("./NebulaScene"), { ssr: false });
+const RubiksCube = dynamic(() => import("@/components/cube/RubiksCube"), { ssr: false });
 
 const MOON_TEXTURE_URLS = [MOON_TEXTURES.color, MOON_TEXTURES.gray, MOON_TEXTURES.height];
 
@@ -81,6 +82,8 @@ export default function MoonSceneClient(): JSX.Element {
             position={[0, 0, MOON.camera.z]}
           />
           <MoonScene />
+          {/* CubeCoach card's cube shares the moon's camera (docs/specs/project-cards) */}
+          <RubiksCube />
           <Suspense fallback={null}>
             <MoonTexturesReady onReady={handleReady} />
           </Suspense>
