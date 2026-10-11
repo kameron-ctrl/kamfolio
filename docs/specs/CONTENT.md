@@ -1,30 +1,39 @@
 # Content sheet (fill in, or reply in chat)
 
-Anything marked **default** ships as written unless you change it. Anything marked **NEEDED** blocks its section.
+Anything marked **default** ships as written unless you change it. Anything marked **NEEDED** blocks its section. Source for experience details: Kameron's resume (Oct 2026). Airbets is intentionally left off the site.
 
-## Projects (Phase 5)
+## Projects (Phase 5) — shipped
 
 ### Green Guardian
-- Description (1–3 sentences): **NEEDED**
-- Tech pills: **NEEDED** (e.g. `Python`, `TensorFlow`, `React`…)
-- Live URL: **NEEDED or "none"**
-- GitHub URL: **NEEDED or "none"**
-- Plant image for the scan effect: **NEEDED.** Drop a file at `public/projects/green-guardian.jpg` (≥ 1200px wide, a portrait or square leaf/plant photo you have rights to). Default if none: a public-domain leaf photo I source.
-- Disease label shown after the scan: default `Early blight · 94% confidence`
+- Description: from the GitHub README. **15 classes confirmed** by Kameron (the resume's "38" is outdated). Slide 10 of the talk also gives ~97% validation accuracy and ~20K training images.
+- Tech pills: `Next.js` `TypeScript` `PyTorch` `FastAPI` `AWS Lambda` `CloudFront`
+- Live: `https://greenguardian.dev` (endpoint confirmed working by Kameron)
+- GitHub: `https://github.com/kameron-ctrl/GreenGuardian`
+- Scan image: `public/projects/green-guardian-leaf-mold.jpg` (PlantVillage, 256×256)
+- Label after scan: `Tomato · Leaf mold`
 
 ### CubeCoach
-- Description: default `An AI-powered Rubik's cube coach: a 3D cube you can step through, Claude-generated explanations tuned to your level, and SM-2 spaced-repetition drills for all 57 OLL and 21 PLL cases.`
-- Tech pills: default `Next.js` `TypeScript` `Three.js` `FastAPI` `Claude API` `PostgreSQL`
-- Live URL: **NEEDED or "none"**
-- GitHub URL: default `https://github.com/kameron-ctrl/CubeCoach` (it must be public before launch)
+- Description: default, matches resume.
+- Live: none (in progress). GitHub: `https://github.com/kameron-ctrl/CubeCoach`
 
 ### Placeholder card
-- Title: default `Next mission — in progress`
-- One line under it: default `Currently building. Check back soon.`
+- `Next mission — in progress` / `Currently building. Check back soon.`
 
-## Beyond the Code one-liners (Phase 6) — max ~70 characters each
+## Talks & writing (new panel, Phase 6) — see `docs/specs/talks/SPEC.md`
 
-| Item | Default (replace with yours) |
+| Item | Kind | Venue | Date | Line | Link |
+|---|---|---|---|---|---|
+| Green Guardian lightning talk + live demo | Talk | Inaugural PyTorch Santa Cruz Meetup, UC Santa Cruz | Jun 30, 2026 | `Shared the stage with NVIDIA and Red Hat speakers to demo Green Guardian live.` | In-page slide viewer (13 slides, `public/talks/slides/`) |
+| "PyTorch by the Sea: The inaugural Santa Cruz PyTorch Meetup" | Article (featured in) | PyTorch Foundation blog | Aug 2026 | Pull quote: `"…he got bonus points for giving us a live demo of the application in action."` | `https://pytorch.org/blog/pytorch-by-the-sea-the-inaugural-santa-cruz-pytorch-meetup/` |
+
+- Photos of you presenting: `public/talks/talk-04.jpg` (main, "amateur gardener" slide behind you), `talk-01.jpg` (title slide), `talk-05.jpg` (close-up). Kameron's own photos; the blog's photos aren't reused.
+- Slides: `public/talks/slides/slide-01…13.png` (720×405). The phone number is painted out on slides 1 and 13; originals are untouched and kept out of git.
+
+## Past the Code (Phase 6) — section renamed from "Beyond the Code"
+
+One-liners, max ~70 characters each. All defaults kept.
+
+| Item | One-liner |
 |---|---|
 | Sousaphone | `Marching-band sousaphone. Yes, the giant one.` |
 | Dance | `Choreography is just state management with bodies.` |
@@ -34,25 +43,29 @@ Anything marked **default** ships as written unless you change it. Anything mark
 | Tea | `Loose-leaf over coffee, always.` |
 | Design | `Typography, color, and the space between.` |
 
-- Strikers one-liner under "President, Strikers Dance Troupe": **NEEDED** (e.g. how many members, what you've led)
+## Strikers (Phase 6)
 
-## Journey timeline (Phase 6)
+- Kicker: `PRESIDENT,` · Headline: `Strikers Dance Troupe`
+- One-liner: `Leading Tallahassee's oldest all-male dance troupe: 40+ men, two concerts a semester.`
+- Photos (`public/strikers/`, gallery order): `01` stage stance in the Strikers jersey, `02` full troupe in face paint (studio), `03` mid-air leap (B&W), `04` face-paint close-up. Not used: `IMG_3331` (near-duplicate of 01) and `IMG_3334` (very dark) — swap in on request.
 
-For each one: **role/title**, **dates** (e.g. `2021–2025` or `Summer 2024`), **one line** (≤ 90 chars).
+## Journey timeline (Phase 6) — chronological
 
-| Node | Role | Dates | One line |
+| Node | Role | Dates | One line (≤ 90 chars) |
 |---|---|---|---|
-| FAMU | **NEEDED** (e.g. B.S. Computer Science) | **NEEDED** | **NEEDED** |
-| Adobe | **NEEDED** | **NEEDED** | **NEEDED** |
-| Outamation | **NEEDED** | **NEEDED** | **NEEDED** |
-| Google CodePath | **NEEDED** | **NEEDED** | **NEEDED** |
-| Now | default `Building CubeCoach & this site` | default `2026` | default `Shipping full-stack products with a creative edge.` |
-| Future | default `Your team?` | default `Next` | default `Looking for full-stack / creative-tech roles.` |
+| FAMU | B.S. Computer Science · TA, OOP in C++ | 2023–2027 | `CS at FAMU; TA'd C++ OOP for ~30 students and three weekly problem sessions.` |
+| Outamation | AI/Data Automation Extern | Oct 2025 – Jan 2026 | `LLM pipelines that classify business documents ~30% faster, ~25% more accurately.` |
+| Google CodePath | Tech Exchange Scholar | Jan – May 2026 | `Selected from 500+ applicants for Google's Tech Exchange program.` |
+| UCSC OSPO | Open Source Intern, Contributor Catalyst | May – Aug 2026 | `p5.js offline-reference research, mentored the cohort, spoke at PyTorch Santa Cruz.` |
+| Now | Building CubeCoach & this site | 2026 | `Shipping full-stack products with a creative edge.` |
+| Future | Your team? | Next | `Looking for full-stack / creative-tech roles.` |
+
+Adobe is dropped: it isn't on the resume. UCSC OSPO takes its place.
 
 ## Contact (Phase 7)
-- Email shown in the rocket panel: **NEEDED** (it's public on the site, so you may want a portfolio-specific address)
+- Email: `kameron1.benjamin@famu.edu`
 - Mailto subject: default `Let's work together`
 
 ## Launch (Phase 8)
 - Production domain: default `kameronbenjamin.vercel.app` (or your own domain)
-- Meta/OG description (≤ 160 chars): default `Full-stack developer (React, Next.js, TypeScript, Python, Three.js) building AI-powered products with real creative craft. FAMU · Adobe · CodePath.`
+- Meta/OG description (≤ 160 chars): `Full-stack developer (React, Next.js, TypeScript, Python, PyTorch, Three.js) building AI-powered products with real creative craft. FAMU · CodePath · PyTorch.`

@@ -46,12 +46,13 @@
 
 ### Personality
 
-- [ ] **PERS-01**: "Beyond the Code" strip shows 7 circular icons: Sousaphone, Dance, Garden, Skates, Sewing, Tea, Design
+- [ ] **PERS-01**: "Past the Code" strip shows 7 circular icons: Sousaphone, Dance, Garden, Skates, Sewing, Tea, Design
 - [ ] **PERS-02**: Each icon expands on hover to reveal a one-liner description
 - [ ] **PERS-03**: Strikers Dance Troupe section shows a CSS-animated silhouette figure formation that shifts on scroll progress
 - [ ] **PERS-04**: Strikers section displays "President, Strikers Dance Troupe" in bold editorial font treatment
-- [ ] **PERS-05**: Journey timeline shows labeled nodes for: FAMU → Adobe → Outamation → Google CodePath → now → future
+- [ ] **PERS-05**: Journey timeline shows labeled nodes for: FAMU → Outamation → Google CodePath → UCSC OSPO → now → future
 - [ ] **PERS-06**: Timeline nodes are moon/planet icons that pulse when active
+- [ ] **TALK-01**: Talks & writing panel shows the PyTorch Santa Cruz Meetup talk and the PyTorch blog feature, each linking out
 
 ### Hire Me
 
@@ -134,6 +135,7 @@
 | PERS-04 | Phase 6 | Pending |
 | PERS-05 | Phase 6 | Pending |
 | PERS-06 | Phase 6 | Pending |
+| TALK-01 | Phase 6 | Pending |
 | HIRE-01 | Phase 7 | Pending |
 | HIRE-02 | Phase 7 | Pending |
 | HIRE-03 | Phase 7 | Pending |

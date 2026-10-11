@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Nebula System** - 6-layer parallax stack, velocity breathe pipeline, particle clusters
 - [x] **Phase 4: Hero Section** - Name fade-in, subtitle typeout, grain overlay, reduced-motion fallback wired (completed 2026-05-18)
 - [ ] **Phase 5: Project Cards** - Full horizontal track, Green Guardian card, CubeCoach card, placeholder, clipPath entrance, SSR safety
-- [ ] **Phase 6: Personality + Timeline** - Beyond the Code strip, Strikers section, journey timeline with planet nodes
+- [ ] **Phase 6: Personality + Timeline** - Past the Code strip, talks panel, Strikers section, journey timeline with planet nodes
 - [ ] **Phase 7: Rocket CTA + UI** - Fixed rocket button, launch animation, email reveal, mobile horizontal variant
 - [ ] **Phase 8: Polish + Mobile** - 375px layout, OG meta, Lighthouse audit, link verification
 

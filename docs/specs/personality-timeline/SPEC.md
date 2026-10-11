@@ -1,16 +1,20 @@
 # Personality + Journey — Spec (Phase 6)
 
-Scope: PERS-01…06. These panels continue the horizontal track after the last project gap. Tokens and type scale follow `docs/specs/project-cards/SPEC.md`. Content placeholders `[C:…]` come from `docs/specs/CONTENT.md`.
+Scope: PERS-01…06, plus TALK-01 (talks panel) and the Strikers photo gallery (added Oct 2026). These panels continue the horizontal track after the last project gap. Tokens and type scale follow `docs/specs/project-cards/SPEC.md`. Content placeholders `[C:…]` come from `docs/specs/CONTENT.md`.
 
 ## Layout (desktop, 1440×900)
 
 | Panel | Width | Contents |
 |---|---|---|
-| Beyond the Code | 100vw | Mono label `BEYOND THE CODE` at top 22vh, left 8vw. Row of 7 circles centered vertically. |
+| Talks & writing | 100vw | See `docs/specs/talks/SPEC.md`. Comes first, right after the last project gap. |
+| Past the Code | 100vw | Mono label `PAST THE CODE` at top 22vh, left 8vw. Row of 7 circles centered vertically. |
 | Strikers | 100vw | Left 45%: title block. Right 55%: silhouette formation. |
+| Strikers gallery | 90vw | Photos from `public/strikers/` (1–4). See **Gallery** below. |
 | Journey | 180vw (2592px) | Horizontal line with 6 nodes, then a 30vw end margin. |
 
-**Beyond the Code circles:** 7 `<button>`s, 104px diameter, 40px gap (row = 968px, centered). 1px hairline border, `--color-surface` fill, inline SVG line icon 40px with a 1.5px stroke in `--color-silver`. Order: Sousaphone, Dance, Garden, Skates, Sewing, Tea, Design. A mono name (11px, tracking 0.18em) sits 16px below each circle.
+**Gallery:** an editorial collage of real photos following the silhouettes, so the formation reads as the abstraction and the photos as the real thing. Photos are portrait-cropped `object-cover` frames, 1px hairline border, radius 4px, no shadow. Layout for N photos: 1 → a single frame 64vh tall, 30vw from the left edge; 2–4 → staggered frames 52vh tall, 6vw apart, alternating `top: 16vh` / `top: 32vh`. Each frame drifts at a parallax rate of 0.85 (moves 15% slower than the track, via `containerAnimation`), transform only. Caption under the first frame in mono 11px muted: `STRIKERS DANCE TROUPE · TALLAHASSEE`. Images go through `next/image` with `sizes="(min-width: 768px) 30vw, 100vw"` and `loading="lazy"`. Alt text describes the moment, e.g. "Kameron mid-performance in a wide stance on stage in a Strikers jersey". Mobile: photos stack full-width at 4:5 below the Strikers stage, 16px apart, no parallax.
+
+**Past the Code circles:** 7 `<button>`s, 104px diameter, 40px gap (row = 968px, centered). 1px hairline border, `--color-surface` fill, inline SVG line icon 40px with a 1.5px stroke in `--color-silver`. Order: Sousaphone, Dance, Garden, Skates, Sewing, Tea, Design. A mono name (11px, tracking 0.18em) sits 16px below each circle.
 
 **Strikers title block:** mono `PRESIDENT,` (14px, tracking 0.24em, `--color-nebula-coral`), then `Strikers Dance Troupe` in Geist Sans **800**, 88px / 0.92, letter-spacing −0.04em, `--color-silver`, max 3 lines. Under it, `[C:strikers one-liner]` in Geist Sans 16px muted, max 44ch. This is the "bold editorial" treatment; it adds no new font family.
 
@@ -21,9 +25,9 @@ Scope: PERS-01…06. These panels continue the horizontal track after the last p
 | Node | Planet tint | Content |
 |---|---|---|
 | FAMU | `#f47c20` → `#0b6a3a` | `[C:FAMU role, dates, line]` |
-| Adobe | `#ff6b6b` (coral) | `[C:Adobe …]` |
 | Outamation | `#2ec4b6` (teal) | `[C:Outamation …]` |
 | Google CodePath | `#7aa2ff` | `[C:CodePath …]` |
+| UCSC OSPO | `#ff6b6b` (coral) | `[C:UCSC OSPO …]` |
 | Now | moon silver `#f1f0e0` → `#9a9a99` | `[C:now …]` |
 | Future | 1px dashed silver ring, no fill | `[C:future …]` |
 
@@ -46,11 +50,12 @@ Circles don't scale and captions appear without a clip animation. The formation 
 
 ## Acceptance checklist
 
-- [ ] 1440×900: after the projects, the track shows the circle strip, then Strikers, then the journey.
+- [ ] 1440×900: after the projects, the track shows Talks & writing, the circle strip, Strikers, the photo gallery, then the journey.
 - [ ] All 7 circles are visible with correct icons; hover **and** keyboard Tab+focus each reveal the right one-liner.
 - [ ] "Strikers Dance Troupe" reads as a bold editorial headline, clearly distinct from body text.
 - [ ] Scrolling through Strikers visibly shifts the formation V → line → diamond; scrolling back reverses it.
 - [ ] All six nodes are labeled; the centered node pulses and the progress line advances with scroll.
 - [ ] 375px: everything stacks, the timeline is vertical, and there's no sideways scroll.
 - [ ] Reduced motion: static and fully readable.
+- [ ] Gallery photos drift slower than the track and stay sharp at 1440 (no upscaling past source size).
 - [ ] Typecheck, lint, tests, and build pass; still one WebGL canvas.
