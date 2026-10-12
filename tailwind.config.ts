@@ -14,9 +14,15 @@ const config: Config = {
           "0%, 100%": { opacity: "0.04" },
           "50%": { opacity: "0.08" },
         },
+        // Journey active node ring (docs/specs/personality-timeline): scale 1→1.8, opacity 0.6→0
+        "orbit-pulse": {
+          "0%": { transform: "scale(1)", opacity: "0.6" },
+          "100%": { transform: "scale(1.8)", opacity: "0" },
+        },
       },
       animation: {
         skeleton: "skeleton 1.6s ease-in-out infinite",
+        "orbit-pulse": "orbit-pulse 1.8s ease-out infinite",
       },
     },
   },

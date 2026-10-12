@@ -4,7 +4,7 @@
 
 **Kameron Benjamin — Portfolio**
 
-A personal portfolio website for Kameron Benjamin, a full-stack developer with a strong creative tech focus. It demonstrates engineering depth through real interactive 3D elements (a photorealistic moon hero, volumetric nebula layers, a live Rubik's cube) and a cinematic scroll experience that transitions from vertical to horizontal — built for general visibility, discovery, and letting the work speak for itself.
+A personal portfolio website for Kameron Benjamin, a full-stack developer with a strong creative tech focus. It demonstrates engineering depth through real interactive 3D elements (a photorealistic moon hero, volumetric nebula layers, a live Rubik's cube) and a cinematic, fully vertical scroll experience — built for general visibility, discovery, and letting the work speak for itself.
 
 **Core Value:** A visitor should immediately feel the combination that makes Kameron distinctive: serious full-stack engineering ability expressed through genuine creative craft.
 

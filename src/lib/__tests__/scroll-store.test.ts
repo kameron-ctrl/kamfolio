@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { useScrollStore, computePhase } from "@/lib/scroll-store";
+import { useScrollStore, pageProgress } from "@/lib/scroll-store";
 
 describe("useScrollStore — initial state (FOUND-01)", () => {
   beforeEach(() => {
@@ -89,56 +89,26 @@ describe("useScrollStore — set action and lerp (FOUND-03)", () => {
   });
 });
 
-describe("computePhase — phase boundaries (FOUND-02)", () => {
-  it("returns vertical at progress 0", () => {
-    expect(computePhase(0)).toEqual({ phase: "vertical", progress: 0 });
+describe("pageProgress — whole-page scroll fraction (all-vertical layout)", () => {
+  it("is 0 at the top", () => {
+    expect(pageProgress(0, 4000)).toBe(0);
   });
 
-  it("returns vertical mid-zone at progress 0.2", () => {
-    const result = computePhase(0.2);
-    expect(result.phase).toBe("vertical");
-    expect(result.progress).toBeCloseTo(0.5, 3);
+  it("is the scrolled fraction mid-page", () => {
+    expect(pageProgress(1000, 4000)).toBeCloseTo(0.25, 6);
   });
 
-  it("returns transition at the 0.4 boundary", () => {
-    const result = computePhase(0.4);
-    expect(result.phase).toBe("transition");
-    expect(result.progress).toBeCloseTo(0, 3);
+  it("is 1 at the bottom", () => {
+    expect(pageProgress(4000, 4000)).toBe(1);
   });
 
-  it("returns transition mid-zone at progress 0.475", () => {
-    const result = computePhase(0.475);
-    expect(result.phase).toBe("transition");
-    expect(result.progress).toBeCloseTo(0.5, 3);
+  it("clamps overscroll at either end", () => {
+    expect(pageProgress(-40, 4000)).toBe(0);
+    expect(pageProgress(4100, 4000)).toBe(1);
   });
 
-  it("returns horizontal at the 0.55 boundary", () => {
-    const result = computePhase(0.55);
-    expect(result.phase).toBe("horizontal");
-    expect(result.progress).toBeCloseTo(0, 3);
-  });
-
-  it("returns horizontal mid-zone at progress 0.775", () => {
-    const result = computePhase(0.775);
-    expect(result.phase).toBe("horizontal");
-    expect(result.progress).toBeCloseTo(0.5, 3);
-  });
-
-  it("returns horizontal end at progress 1.0", () => {
-    const result = computePhase(1.0);
-    expect(result.phase).toBe("horizontal");
-    expect(result.progress).toBeCloseTo(1.0, 3);
-  });
-
-  it("clamps negative input to vertical/0", () => {
-    const result = computePhase(-0.1);
-    expect(result.phase).toBe("vertical");
-    expect(result.progress).toBe(0);
-  });
-
-  it("clamps input above 1 to horizontal/1", () => {
-    const result = computePhase(1.1);
-    expect(result.phase).toBe("horizontal");
-    expect(result.progress).toBe(1);
+  it("is 0 when the page can't scroll", () => {
+    expect(pageProgress(0, 0)).toBe(0);
+    expect(pageProgress(10, -5)).toBe(0);
   });
 });

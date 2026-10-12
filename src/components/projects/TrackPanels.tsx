@@ -1,11 +1,11 @@
 import { display } from "@/lib/fonts";
 
-/** Opening panel of the horizontal track. */
+/** Opening heading of the projects section. */
 export function ProjectsIntro(): JSX.Element {
   return (
     <section
       aria-labelledby="projects-heading"
-      className="flex shrink-0 flex-col justify-center px-4 pb-10 pt-24 md:h-screen md:w-[50vw] md:px-0 md:pl-[8vw] md:pt-0"
+      className="flex flex-col px-4 pb-10 pt-24 md:px-[8vw] md:pb-[10vh] md:pt-[20vh]"
     >
       <p className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
         Selected work
@@ -20,7 +20,7 @@ export function ProjectsIntro(): JSX.Element {
   );
 }
 
-/** Empty breathing room between cards — only the sky and stars show through (PROJ-06). */
-export function TrackGap(): JSX.Element {
-  return <div aria-hidden="true" className="h-12 shrink-0 md:h-screen md:w-[40vw]" />;
+/** Empty breathing room between sections — only the sky and stars show through (PROJ-06). */
+export function SkyGap(): JSX.Element {
+  return <div aria-hidden="true" className="h-12 md:h-[40vh]" />;
 }

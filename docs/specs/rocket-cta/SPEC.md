@@ -35,7 +35,7 @@ No squash, flight, or particles. The panel fades in over 150ms. Copy and close w
 
 ## Acceptance checklist
 
-- [ ] Button is visible bottom-right at the top of the page, mid-hero, during the pinned horizontal track, and at the end.
+- [ ] Button is visible bottom-right at the top of the page, mid-hero, over the project cards, and at the end of the page.
 - [ ] Click → rocket launches with a visible particle trail and leaves the screen, then the email panel appears.
 - [ ] Copy puts the exact email on the clipboard and shows `Copied ✓`; `Email me` opens a mailto with the subject.
 - [ ] Esc / × / outside click closes it and returns focus to the button; works with keyboard only.

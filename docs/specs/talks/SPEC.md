@@ -1,11 +1,11 @@
 # Talks & Writing — Spec (Phase 6, TALK-01)
 
-One 100vw panel on the horizontal track, placed after the last project gap and before Past the Code. It's the bridge from "things I built" to "who I am": Green Guardian, the card just before it, is also the project in the talk. Tokens and type follow `docs/specs/project-cards/SPEC.md`. Content comes from `docs/specs/CONTENT.md` → "Talks & writing".
+A full-width section placed after the last project gap and before Strikers. It's the bridge from "things I built" to "who I am": Green Guardian, the card just before it, is also the project in the talk. Tokens and type follow `docs/specs/project-cards/SPEC.md`. Content comes from `docs/specs/CONTENT.md` → "Talks & writing".
 
 ## Layout (desktop, 1440×900)
 
-- Mono kicker `ON STAGE & IN PRINT` at top 22vh, left 8vw (11px, tracking 0.18em, `--color-text-muted`).
-- Two entries side by side, starting at left 8vw, 40vw wide each with a 4vw gap, top aligned at 34vh. No card chrome: entries sit directly on the sky and are separated by a 1px vertical hairline, 48vh tall.
+- Section padding 16vh top/bottom, 8vw sides. Mono kicker `ON STAGE & IN PRINT` (11px, tracking 0.18em, `--color-text-muted`).
+- Two entries side by side, 48px below the kicker, splitting the width equally with a 4vw gap. No card chrome: entries sit directly on the sky and are separated by a 1px vertical hairline as tall as the taller entry.
 
 **Entry (talk, left):**
 1. Mono meta: `TALK · JUN 30, 2026 · UC SANTA CRUZ` (11px, tracking 0.18em, `--color-nebula-teal`)
@@ -25,7 +25,7 @@ One 100vw panel on the horizontal track, placed after the last project gap and b
 
 | Piece | Rule |
 |---|---|
-| Entrance | When the panel crosses 70% of the viewport (`containerAnimation`), each entry fades and lifts in: `opacity 0→1`, `y 16→0`, 600ms `--ease-out-expo`, right entry 120ms after the left. Once only. |
+| Entrance | When the section top crosses 75% of the viewport, each entry fades and lifts in: `opacity 0→1`, `y 16→0`, 600ms `--ease-out-expo`, right entry 120ms after the left. Once only. |
 | Divider | The vertical hairline draws with `scaleY 0→1` (origin top), 700ms, in sync with the left entry. |
 | Links | External: `target="_blank" rel="noopener noreferrer"`. Hover turns the underline teal over 150ms; focus-visible gets a 2px teal outline, 4px offset. |
 
@@ -35,7 +35,7 @@ A native `<dialog>` opened with `showModal()`, so focus is trapped and Esc close
 
 ## Mobile (<768px)
 
-The entries stack, with a 1px horizontal hairline between them and 48px gaps. Titles drop to 24px and the pull quote to 18px. The entrance uses the same fade with no stagger, triggered at 85% of the viewport.
+The entries stack, with a 1px horizontal hairline between them and 48px gaps. Titles drop to 24px and the pull quote to 18px. The entrance uses the same fade with no stagger, triggered at the same point.
 
 ## Reduced motion
 
@@ -43,7 +43,7 @@ No entrance and no divider draw: everything is visible at rest.
 
 ## Acceptance checklist
 
-- [ ] 1440×900: after the third project gap, the panel shows both entries side by side with the divider, and nothing overflows.
+- [ ] 1440×900: after the third project gap, the section shows both entries side by side with the divider, and nothing overflows.
 - [ ] `Read the post ↗` opens the pytorch.org post in a new tab.
 - [ ] The pull quote matches the blog wording exactly.
 - [ ] 375px: entries stack with no sideways scroll.

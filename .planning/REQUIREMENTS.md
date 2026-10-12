@@ -10,7 +10,7 @@
 ### Foundation
 
 - [ ] **FOUND-01**: Site scrolls smoothly with Lenis, exposing velocity to all visual effects
-- [ ] **FOUND-02**: Page transitions from vertical scroll (0–40%) to pinned horizontal (55–100%) without jank, with a transition zone at 40–55%
+- [ ] ~~**FOUND-02**: Page transitions from vertical scroll (0–40%) to pinned horizontal (55–100%) without jank, with a transition zone at 40–55%~~ (dropped Oct 11, 2026: page is vertical end to end)
 - [ ] **FOUND-03**: Scroll velocity drives visual effects: skewX on content cards, blur on 3D elements, nebula layer spread
 - [ ] **FOUND-04**: GSAP ScrollTrigger fires at correct visual offsets (synced to Lenis position, not native scrollY)
 - [ ] **FOUND-05**: Single GSAP plugin registration site (`lib/gsap.ts`) — no duplicate registrations across component files
@@ -36,7 +36,7 @@
 
 ### Projects
 
-- [ ] **PROJ-01**: Horizontal track advances left as visitor scrolls vertically within the horizontal zone
+- [ ] ~~**PROJ-01**: Horizontal track advances left as visitor scrolls vertically within the horizontal zone~~ (dropped Oct 11, 2026: cards stack vertically)
 - [ ] **PROJ-02**: Green Guardian card shows a leaf scan-line animation sweeping down a plant image on enter, with disease label fading in
 - [ ] **PROJ-03**: CubeCoach card shows a live embedded R3F Rubik's cube that scrambles on hover and slowly solves on mouse leave
 - [ ] **PROJ-04**: At least one placeholder project card slot renders correctly as a styled skeleton
@@ -46,9 +46,9 @@
 
 ### Personality
 
-- [ ] **PERS-01**: "Past the Code" strip shows 7 circular icons: Sousaphone, Dance, Garden, Skates, Sewing, Tea, Design
-- [ ] **PERS-02**: Each icon expands on hover to reveal a one-liner description
-- [ ] **PERS-03**: Strikers Dance Troupe section shows a CSS-animated silhouette figure formation that shifts on scroll progress
+- [ ] ~~**PERS-01**: "Past the Code" strip shows 7 circular icons: Sousaphone, Dance, Garden, Skates, Sewing, Tea, Design~~ (dropped Oct 11, 2026: Past the Code removed)
+- [ ] ~~**PERS-02**: Each icon expands on hover to reveal a one-liner description~~ (dropped Oct 11, 2026: Past the Code removed)
+- [ ] **PERS-03**: Strikers Dance Troupe section shows an animated silhouette figure formation that shifts on scroll progress
 - [ ] **PERS-04**: Strikers section displays "President, Strikers Dance Troupe" in bold editorial font treatment
 - [ ] **PERS-05**: Journey timeline shows labeled nodes for: FAMU → Outamation → Google CodePath → UCSC OSPO → now → future
 - [ ] **PERS-06**: Timeline nodes are moon/planet icons that pulse when active
@@ -105,7 +105,7 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Dropped |
 | FOUND-03 | Phase 1 | Pending |
 | FOUND-04 | Phase 1 | Pending |
 | FOUND-05 | Phase 1 | Pending |
@@ -122,15 +122,15 @@
 | NEB-03 | Phase 3 | Pending |
 | NEB-04 | Phase 3 | Pending |
 | NEB-05 | Phase 3 | Pending |
-| PROJ-01 | Phase 5 | Pending |
+| PROJ-01 | Phase 5 | Dropped |
 | PROJ-02 | Phase 5 | Pending |
 | PROJ-03 | Phase 5 | Pending |
 | PROJ-04 | Phase 5 | Pending |
 | PROJ-05 | Phase 5 | Pending |
 | PROJ-06 | Phase 5 | Pending |
 | PROJ-07 | Phase 5 | Pending |
-| PERS-01 | Phase 6 | Pending |
-| PERS-02 | Phase 6 | Pending |
+| PERS-01 | Phase 6 | Dropped |
+| PERS-02 | Phase 6 | Dropped |
 | PERS-03 | Phase 6 | Pending |
 | PERS-04 | Phase 6 | Pending |
 | PERS-05 | Phase 6 | Pending |

@@ -29,9 +29,9 @@ Anything marked **default** ships as written unless you change it. Anything mark
 - Photos of you presenting: `public/talks/talk-04.jpg` (main, "amateur gardener" slide behind you), `talk-01.jpg` (title slide), `talk-05.jpg` (close-up). Kameron's own photos; the blog's photos aren't reused.
 - Slides: `public/talks/slides/slide-01…13.png` (720×405). The phone number is painted out on slides 1 and 13; originals are untouched and kept out of git.
 
-## Past the Code (Phase 6) — section renamed from "Beyond the Code"
+## Past the Code — removed Oct 11, 2026 (kept for reference)
 
-One-liners, max ~70 characters each. All defaults kept.
+Kameron cut this section ("anticlimactic") and has another idea for the slot. The one-liners are kept here only as a record.
 
 | Item | One-liner |
 |---|---|

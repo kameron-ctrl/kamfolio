@@ -5,22 +5,19 @@
  *
  * Outer div takes the velocity skew; the inner <article> takes the clip-path
  * wipe, so the wipe edge travels with the skew instead of cropping it.
- * Triggers are built only once HorizontalTrack has decided desktop (pinned,
- * containerAnimation) vs mobile (plain vertical triggers).
+ * The page scrolls vertically, so the skew is on Y and desktop-only.
  */
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap, { ScrollTrigger } from "@/lib/gsap";
 import { useScrollStore } from "@/lib/scroll-store";
-import { prefersReducedMotion } from "@/lib/reduced-motion";
+import { DESKTOP_QUERY, prefersReducedMotion } from "@/lib/reduced-motion";
 import { display } from "@/lib/fonts";
-import { useTrack } from "@/components/horizontal-track/track-context";
 import type { Project } from "@/content/projects";
 import ProjectMedia from "./ProjectMedia";
 
 const WIPE_DURATION = 0.9;
-const WIPE_START_X = "left 85%";
-const WIPE_START_Y = "top 85%";
+const WIPE_START = "top 85%";
 const SKEW_PER_VELOCITY = 0.15;
 const SKEW_MAX_DEG = 4;
 const SKEW_EASE = 0.15;
@@ -38,15 +35,15 @@ function pad(n: number): string {
 export default function ProjectCard({ project, index, total }: ProjectCardProps): JSX.Element {
   const skewRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLElement>(null);
-  const { mode, tween } = useTrack();
   const [revealed, setRevealed] = useState<boolean>(false);
   const titleId = `project-${project.id}-title`;
 
   // Clip-path wipe, once, when the card's leading edge reaches 85% of the viewport
   useGSAP(
     () => {
+      gsap.registerPlugin(ScrollTrigger);
       const frame = frameRef.current;
-      if (mode === "pending" || !frame) return;
+      if (!frame) return;
       if (prefersReducedMotion()) {
         setRevealed(true);
         return;
@@ -54,8 +51,7 @@ export default function ProjectCard({ project, index, total }: ProjectCardProps)
       gsap.set(frame, { clipPath: "inset(0 100% 0 0)" });
       ScrollTrigger.create({
         trigger: frame,
-        containerAnimation: mode === "horizontal" && tween ? tween : undefined,
-        start: mode === "horizontal" ? WIPE_START_X : WIPE_START_Y,
+        start: WIPE_START,
         once: true,
         onEnter: () => {
           gsap.to(frame, {
@@ -67,14 +63,14 @@ export default function ProjectCard({ project, index, total }: ProjectCardProps)
         },
       });
     },
-    { dependencies: [mode, tween], revertOnUpdate: true }
+    { scope: frameRef }
   );
 
   // Velocity skew — desktop only, driven off the GSAP ticker (no React renders)
   useEffect(() => {
     const el = skewRef.current;
-    if (mode !== "horizontal" || !el || prefersReducedMotion()) return;
-    const setSkew = gsap.quickSetter(el, "skewX", "deg") as (v: number) => void;
+    if (!el || prefersReducedMotion() || !window.matchMedia(DESKTOP_QUERY).matches) return;
+    const setSkew = gsap.quickSetter(el, "skewY", "deg") as (v: number) => void;
     let skew = 0;
     const tick = (): void => {
       const v = useScrollStore.getState().velocity;
@@ -87,12 +83,12 @@ export default function ProjectCard({ project, index, total }: ProjectCardProps)
       gsap.ticker.remove(tick);
       setSkew(0);
     };
-  }, [mode]);
+  }, []);
 
   const { live, github } = project.links;
 
   return (
-    <div className="flex shrink-0 items-center px-4 py-3 md:h-screen md:px-0 md:py-0">
+    <div className="flex justify-center px-4 py-3 md:px-[8vw] md:py-0">
       <div ref={skewRef} className="w-full md:w-auto">
         <article
           ref={frameRef}
