@@ -13,7 +13,7 @@ import { useCubeStore } from "@/components/cube/cube-store";
 import { LEAF_DIAGNOSIS, type ProjectMedia as MediaKind } from "@/content/projects";
 
 const MEDIA_FRAME =
-  "relative aspect-[4/3] w-full overflow-hidden rounded-sm border border-[var(--color-hairline)] md:aspect-auto md:h-full";
+  "relative aspect-[4/3] w-full overflow-hidden rounded-sm border border-[var(--color-hairline)]";
 
 const SCAN_DURATION = 1.6;
 const SCAN_FADE = 0.3;
@@ -26,9 +26,7 @@ interface MediaProps {
 }
 
 export default function ProjectMedia({ media, revealed }: MediaProps): JSX.Element {
-  if (media === "leaf") return <LeafScan revealed={revealed} />;
-  if (media === "cube") return <CubeSlot revealed={revealed} />;
-  return <SkeletonMedia />;
+  return media === "leaf" ? <LeafScan revealed={revealed} /> : <CubeSlot revealed={revealed} />;
 }
 
 /** Green Guardian: teal scan line sweeps the leaf, then the diagnosis label fades in. */
@@ -125,17 +123,6 @@ function CubeSlot({ revealed }: { revealed: boolean }): JSX.Element {
       <p className="absolute inset-x-0 bottom-4 text-center font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
         {isTouch ? "Tap to scramble" : "Hover to scramble"}
       </p>
-    </div>
-  );
-}
-
-/** Placeholder: three pulsing skeleton blocks. */
-function SkeletonMedia(): JSX.Element {
-  return (
-    <div className={`${MEDIA_FRAME} flex flex-col gap-4 p-6`} aria-hidden="true">
-      <div className="h-1/2 rounded-sm bg-[var(--color-silver)] animate-skeleton motion-reduce:animate-none motion-reduce:opacity-[0.06]" />
-      <div className="h-6 w-3/4 rounded-sm bg-[var(--color-silver)] animate-skeleton [animation-delay:200ms] motion-reduce:animate-none motion-reduce:opacity-[0.06]" />
-      <div className="h-6 w-1/2 rounded-sm bg-[var(--color-silver)] animate-skeleton [animation-delay:400ms] motion-reduce:animate-none motion-reduce:opacity-[0.06]" />
     </div>
   );
 }

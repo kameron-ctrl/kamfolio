@@ -34,3 +34,21 @@ export function useScrollReveal(ref: RefObject<HTMLElement>, { start, onArm, onR
     { scope: ref }
   );
 }
+
+const STAGGER_ENTRANCE = { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" } as const;
+
+/**
+ * Fades + lifts every `[data-reveal]` inside `ref` in order, `staggerS` apart,
+ * once the section top crosses 75% of the viewport. Static under reduced motion.
+ */
+export function useStaggerReveal(ref: RefObject<HTMLElement>, staggerS: number): void {
+  const items = (): HTMLElement[] =>
+    ref.current ? gsap.utils.toArray<HTMLElement>("[data-reveal]", ref.current) : [];
+  useScrollReveal(ref, {
+    start: "top 75%",
+    onArm: () => gsap.set(items(), { opacity: 0, y: 16 }),
+    onReveal: (instant) => {
+      if (!instant) gsap.to(items(), { ...STAGGER_ENTRANCE, stagger: staggerS });
+    },
+  });
+}

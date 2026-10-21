@@ -6,9 +6,9 @@ Scope: HIRE-01…04. The email comes from `docs/specs/CONTENT.md`.
 
 | Piece | Rule |
 |---|---|
-| Mount | In `layout.tsx`, outside the Lenis/pinned content tree, so `position: fixed` can't be broken by a transformed ancestor (the pin uses transforms). |
+| Mount | In `layout.tsx`, beside (not inside) the page content wrapper, so `position: fixed` can never be broken by a transformed ancestor. |
 | Button | `<button aria-label="Hire me — show contact email">`, 64px circle, fixed `right: calc(24px + env(safe-area-inset-right))`, `bottom: calc(24px + env(safe-area-inset-bottom))`, z-index 50. Fill `rgba(28,28,31,0.72)` + `backdrop-filter: blur(12px)`, 1px hairline border. Rocket SVG is 28px, `--color-silver`, nose up. |
-| Label | On hover/focus, a pill reading `HIRE ME` (mono 11px, tracking 0.18em) slides out 12px to the left of the button: opacity plus x 8px→0, 200ms. |
+| Label | Desktop only (touch screens keep hover "stuck" after a tap). On hover/focus, a pill reading `HIRE ME` (mono 11px, tracking 0.18em) slides out 12px to the left of the button: opacity plus x 8px→0, 200ms. |
 | States | Hover: border goes `--color-silver` at 0.4, rocket lifts y −2px. Active: scale 0.94. Focus-visible: 2px teal outline, 3px offset. |
 | Contact panel | 360px wide, anchored 16px above the button, right-aligned with it. Surface `rgba(18,18,20,0.92)` + blur 16px, hairline border, radius 6px, 24px padding. Contents: mono `SAY HELLO`, the email in Geist Mono 16px `--color-silver`, then two buttons: `Copy` and `Email me ↗` (mailto with subject `[C:mail subject]`). Close × sits top-right. `role="dialog"`, `aria-labelledby`. |
 

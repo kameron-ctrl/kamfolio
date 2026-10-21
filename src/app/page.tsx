@@ -2,18 +2,23 @@
  * Home page. Server Component. One vertical scroll, top to bottom:
  *
  *   1. Moon hero (moon drawn by the global canvas)
- *   2. Projects: heading, then cards separated by empty sky (docs/specs/project-cards)
- *   3. Talks & writing (docs/specs/talks)
- *   4. Strikers + photo gallery, journey timeline (docs/specs/personality-timeline)
+ *   2. About (docs/specs/about-skills-involvement)
+ *   3. Projects: heading, then cards separated by empty sky (docs/specs/project-cards)
+ *   4. Talks & writing (docs/specs/talks)
+ *   5. Skills, then Campus involvement: Strikers, Kappa Kappa Psi, Marching "100" (each with photos)
+ *   6. Journey timeline (docs/specs/personality-timeline)
  */
 import { Fragment } from "react";
+import AboutSection from "@/components/about/AboutSection";
+import InvolvementHeader from "@/components/involvement/InvolvementHeader";
+import OrgFeature from "@/components/involvement/OrgFeature";
 import JourneyTimeline from "@/components/journey/JourneyTimeline";
 import MoonHero from "@/components/moon/MoonHero";
 import ProjectCard from "@/components/projects/ProjectCard";
 import { ProjectsIntro, SkyGap } from "@/components/projects/TrackPanels";
-import StrikersGallery from "@/components/strikers/StrikersGallery";
-import StrikersPanel from "@/components/strikers/StrikersPanel";
+import SkillsSection from "@/components/skills/SkillsSection";
 import TalksPanel from "@/components/talks/TalksPanel";
+import { ORGANIZATIONS } from "@/content/about";
 import { PROJECTS } from "@/content/projects";
 
 export default function Page(): JSX.Element {
@@ -23,6 +28,7 @@ export default function Page(): JSX.Element {
         <MoonHero />
       </section>
 
+      <AboutSection />
       <ProjectsIntro />
       {PROJECTS.map((project, i) => (
         <Fragment key={project.id}>
@@ -32,8 +38,11 @@ export default function Page(): JSX.Element {
       ))}
 
       <TalksPanel />
-      <StrikersPanel />
-      <StrikersGallery />
+      <SkillsSection />
+      <InvolvementHeader />
+      {ORGANIZATIONS.map((org, i) => (
+        <OrgFeature key={org.id} org={org} index={i} />
+      ))}
       <JourneyTimeline />
     </main>
   );

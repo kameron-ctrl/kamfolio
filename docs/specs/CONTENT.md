@@ -56,7 +56,7 @@ Kameron cut this section ("anticlimactic") and has another idea for the slot. Th
 | FAMU | B.S. Computer Science · TA, OOP in C++ | 2023–2027 | `CS at FAMU; TA'd C++ OOP for ~30 students and three weekly problem sessions.` |
 | Outamation | AI/Data Automation Extern | Oct 2025 – Jan 2026 | `LLM pipelines that classify business documents ~30% faster, ~25% more accurately.` |
 | Google CodePath | Tech Exchange Scholar | Jan – May 2026 | `Selected from 500+ applicants for Google's Tech Exchange program.` |
-| UCSC OSPO | Open Source Intern, Contributor Catalyst | May – Aug 2026 | `p5.js offline-reference research, mentored the cohort, spoke at PyTorch Santa Cruz.` |
+| UCSC OSPO | Open Source Intern, Contributor Catalyst | May – Aug 2026 | `Researched an offline p5.js reference release; spoke at PyTorch Santa Cruz.` (Kameron was not a mentor — corrected Oct 12, 2026) |
 | Now | Building CubeCoach & this site | 2026 | `Shipping full-stack products with a creative edge.` |
 | Future | Your team? | Next | `Looking for full-stack / creative-tech roles.` |
 
@@ -69,3 +69,12 @@ Adobe is dropped: it isn't on the resume. UCSC OSPO takes its place.
 ## Launch (Phase 8)
 - Production domain: default `kameronbenjamin.vercel.app` (or your own domain)
 - Meta/OG description (≤ 160 chars): `Full-stack developer (React, Next.js, TypeScript, Python, PyTorch, Three.js) building AI-powered products with real creative craft. FAMU · CodePath · PyTorch.`
+
+## About, Skills, Campus involvement (added Oct 12, 2026) — see `docs/specs/about-skills-involvement/SPEC.md`
+
+- **About:** Kameron's own two paragraphs, verbatim (in `src/content/about.ts` → `ABOUT`).
+- **Skills:** from the resume, grouped Languages · Frontend & 3D · Backend & Cloud · AI & ML.
+- **Strikers meta:** `Sept 2023 – present · Also assistant rehearsal director & historian`.
+- **Kappa Kappa Psi:** Vice President of Programs · Co-Webmaster, Apr 2025 – present. Links to deltaiota.org.
+- **FAMU Marching "100":** Sousaphone. Dates: **NEEDED or "none"**.
+- **ColorStack** (on the resume's organizations line): include? **Ask Kameron.**

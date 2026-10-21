@@ -22,5 +22,5 @@ export function ProjectsIntro(): JSX.Element {
 
 /** Empty breathing room between sections — only the sky and stars show through (PROJ-06). */
 export function SkyGap(): JSX.Element {
-  return <div aria-hidden="true" className="h-12 md:h-[40vh]" />;
+  return <div aria-hidden="true" className="h-12 md:h-[12vh]" />;
 }

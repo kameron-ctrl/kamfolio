@@ -86,16 +86,22 @@ export default function ProjectCard({ project, index, total }: ProjectCardProps)
   }, []);
 
   const { live, github } = project.links;
+  // Media alternates sides down the page: left, right, left…
+  const mediaRight = index % 2 === 1;
 
   return (
     <div className="flex justify-center px-4 py-3 md:px-[8vw] md:py-0">
-      <div ref={skewRef} className="w-full md:w-auto">
+      <div ref={skewRef} className="w-full md:max-w-[1240px]">
         <article
           ref={frameRef}
           aria-labelledby={titleId}
-          className="flex w-full flex-col gap-6 rounded border border-[var(--color-hairline)] bg-[var(--color-surface)] p-5 md:grid md:h-[min(70vh,640px)] md:w-[min(62vw,920px)] md:grid-cols-[56fr_44fr] md:gap-8 md:p-10"
+          className={`flex w-full flex-col gap-6 rounded border border-[var(--color-hairline)] bg-[var(--color-surface)] p-5 md:grid md:items-center md:gap-12 md:p-10 ${
+            mediaRight ? "md:grid-cols-[5fr_7fr]" : "md:grid-cols-[7fr_5fr]"
+          }`}
         >
-          <ProjectMedia media={project.media} revealed={revealed} />
+          <div className={mediaRight ? "md:order-2" : ""}>
+            <ProjectMedia media={project.media} revealed={revealed} />
+          </div>
 
           <div className="flex min-w-0 flex-col justify-center">
             <p className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
@@ -103,7 +109,7 @@ export default function ProjectCard({ project, index, total }: ProjectCardProps)
             </p>
             <h3
               id={titleId}
-              className={`${display.className} mt-4 bg-[image:var(--gradient-silver)] bg-clip-text text-[28px] uppercase leading-none text-transparent [overflow-wrap:anywhere] md:text-[clamp(28px,2.5vw,40px)]`}
+              className={`${display.className} mt-4 bg-[image:var(--gradient-silver)] bg-clip-text text-[28px] uppercase leading-none text-transparent [overflow-wrap:anywhere] md:text-[clamp(28px,3vw,44px)]`}
             >
               {project.title}
             </h3>

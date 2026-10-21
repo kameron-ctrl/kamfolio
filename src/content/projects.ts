@@ -2,7 +2,7 @@
  * Project card content (docs/specs/CONTENT.md). Hardcoded on purpose — no CMS.
  * A link left undefined is not rendered.
  */
-export type ProjectMedia = "leaf" | "cube" | "placeholder";
+export type ProjectMedia = "leaf" | "cube";
 
 export interface Project {
   id: string;
@@ -37,13 +37,5 @@ export const PROJECTS: readonly Project[] = [
     pills: ["Next.js", "TypeScript", "Three.js", "FastAPI", "Claude API", "PostgreSQL"],
     links: { github: "https://github.com/kameron-ctrl/CubeCoach" },
     media: "cube",
-  },
-  {
-    id: "next",
-    title: "Next mission — in progress",
-    description: "Currently building. Check back soon.",
-    pills: [],
-    links: {},
-    media: "placeholder",
   },
 ];
