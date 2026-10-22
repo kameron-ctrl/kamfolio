@@ -1,73 +1,49 @@
 /**
- * Phase 1 demo page (D-13).
+ * Home page. Server Component. One vertical scroll, top to bottom:
  *
- * Server Component. Renders a tall vertical spacer above HorizontalTrack
- * so the document is tall enough for the D-09 phase boundaries
- * (vertical 0-40%, transition 40-55%, horizontal 55-100%) to align with
- * the visual geometry of the pin trigger.
- *
- * Sizing:
- *   - Vertical spacer: 250vh
- *   - HorizontalTrack inner width: 3 × 100vw = 300vw → 200vw of horizontal travel
- *   - GSAP pin adds a 200vh pinSpacer for the duration of the scrub
- *   - Total document height: ~450vh; pin engages at ~250vh / ~450vh ≈ 55% ✓
- *
- * Placeholder visual (D-13): three full-viewport panels with distinct
- * background colors and labels so pin + translateX motion is obvious.
- * Real card content arrives in Phase 5.
+ *   1. Moon hero (moon drawn by the global canvas)
+ *   2. About (docs/specs/about-skills-involvement)
+ *   3. Projects: heading, then cards separated by empty sky (docs/specs/project-cards)
+ *   4. Talks & writing (docs/specs/talks)
+ *   5. Skills, then Campus involvement: Strikers, Kappa Kappa Psi, Marching "100" (each with photos)
+ *   6. Journey timeline (docs/specs/personality-timeline)
  */
-import HorizontalTrack from "@/components/horizontal-track/HorizontalTrack";
-import HeroOverlay from "@/components/hero/HeroOverlay";
-
-const PLACEHOLDER_SLOTS: ReadonlyArray<{ bg: string; label: string }> = [
-  { bg: "#1a1a3e", label: "Placeholder 1" },
-  { bg: "#1a2e3e", label: "Placeholder 2" },
-  { bg: "#2e1a3e", label: "Placeholder 3" },
-];
+import { Fragment } from "react";
+import AboutSection from "@/components/about/AboutSection";
+import InvolvementHeader from "@/components/involvement/InvolvementHeader";
+import OrgFeature from "@/components/involvement/OrgFeature";
+import JourneyTimeline from "@/components/journey/JourneyTimeline";
+import MoonHero from "@/components/moon/MoonHero";
+import ProjectCard from "@/components/projects/ProjectCard";
+import { ProjectsIntro, SkyGap } from "@/components/projects/TrackPanels";
+import SkillsSection from "@/components/skills/SkillsSection";
+import TalksPanel from "@/components/talks/TalksPanel";
+import { ORGANIZATIONS } from "@/content/about";
+import { PROJECTS } from "@/content/projects";
 
 export default function Page(): JSX.Element {
   return (
     <main>
-      {/* Vertical zone — hero overlay + future nebula content */}
-      <section
-        style={{ minHeight: "250vh" }}
-        data-testid="vertical-zone"
-      ><HeroOverlay /></section>
+      <section style={{ minHeight: "250vh" }} data-testid="vertical-zone">
+        <MoonHero />
+      </section>
 
-      {/* Horizontal zone — pin + scrub */}
-      <HorizontalTrack>
-        {PLACEHOLDER_SLOTS.map((slot, i) => (
-          <div
-            key={slot.label}
-            style={{
-              width: "100vw",
-              height: "100vh",
-              flexShrink: 0,
-              background: slot.bg,
-              color: "#ffffff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily:
-                "ui-monospace, SFMono-Regular, Menlo, monospace",
-              fontSize: "2.5rem",
-              letterSpacing: "0.1em",
-            }}
-            data-testid={`horizontal-slot-${i}`}
-          >
-            {slot.label}
-          </div>
-        ))}
-      </HorizontalTrack>
+      <AboutSection />
+      <ProjectsIntro />
+      {PROJECTS.map((project, i) => (
+        <Fragment key={project.id}>
+          <ProjectCard project={project} index={i} total={PROJECTS.length} />
+          <SkyGap />
+        </Fragment>
+      ))}
 
-      {/* Trailing spacer — small buffer at end of pin so scroll doesn't end abruptly */}
-      <section
-        style={{
-          minHeight: "20vh",
-          background: "#0a0a1a",
-        }}
-        data-testid="trailing-spacer"
-      />
+      <TalksPanel />
+      <SkillsSection />
+      <InvolvementHeader />
+      {ORGANIZATIONS.map((org, i) => (
+        <OrgFeature key={org.id} org={org} index={i} />
+      ))}
+      <JourneyTimeline />
     </main>
   );
 }

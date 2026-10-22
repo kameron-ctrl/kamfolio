@@ -99,7 +99,7 @@ export default function MoonScene({ onReady }: MoonSceneProps): JSX.Element {
   }, []);
 
   // Entrance: Z fly-in -15 to 0 over 2.5s, power3.out (HERO-04, D-11, D-13).
-  // useGSAP from @gsap/react matches HorizontalTrack.tsx canonical pattern;
+  // useGSAP from @gsap/react (the project's standard GSAP-in-React pattern);
   // wraps gsap.context() so StrictMode double-invoke and unmount auto-revert.
   useGSAP(
     () => {

@@ -12,8 +12,6 @@ import { useTypewriter } from "@/hooks/useTypewriter";
  *   - HERO-06: Kameron's name fades from opacity 0 → 1 via GSAP over NAME_FADE_DURATION seconds
  *              starting NAME_FADE_DELAY seconds after mount.
  *   - HERO-07: Subtitle types out character by character after name fade completes (onComplete gate).
- *   - HERO-08: GRAIN_OPACITY constant exported for unit testability (grain layer lives in globals.css).
- *
  * Reduced motion (QUAL-03): name appears at full opacity immediately; subtitle shows as full
  * text immediately (useTypewriter fast-path); cursor fade is instant via calc(var(--motion-ok) * 0s).
  *
@@ -23,7 +21,6 @@ import { useTypewriter } from "@/hooks/useTypewriter";
 // Named constants — exported so HeroOverlay.constants.test.ts can assert ranges
 export const NAME_FADE_DELAY = 1.3;       // seconds — D-05: must be in [1.2, 1.5]
 export const NAME_FADE_DURATION = 1.8;    // seconds — D-06: must be in [1.5, 2.0]
-export const GRAIN_OPACITY = 0.05;        // unitless — D-14: must be in [0.04, 0.07]
 export const CURSOR_FADE_DELAY_MS = 2000; // milliseconds — D-11
 
 const SUBTITLE_TEXT = "Full-stack developer & creative technologist";

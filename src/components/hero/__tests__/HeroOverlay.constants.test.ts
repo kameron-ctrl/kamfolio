@@ -1,4 +1,4 @@
-import { NAME_FADE_DELAY, NAME_FADE_DURATION, GRAIN_OPACITY } from "@/components/hero/HeroOverlay";
+import { NAME_FADE_DELAY, NAME_FADE_DURATION } from "@/components/hero/HeroOverlay";
 
 describe("HeroOverlay constants", () => {
   describe("NAME_FADE_DELAY — HERO-06", () => {
@@ -15,10 +15,4 @@ describe("HeroOverlay constants", () => {
     });
   });
 
-  describe("GRAIN_OPACITY — HERO-08", () => {
-    it("is between 0.04 and 0.07 per D-14", () => {
-      expect(GRAIN_OPACITY).toBeGreaterThanOrEqual(0.04);
-      expect(GRAIN_OPACITY).toBeLessThanOrEqual(0.07);
-    });
-  });
 });

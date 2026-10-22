@@ -18,7 +18,7 @@ import { useLayoutEffect, useRef } from "react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import gsap, { ScrollTrigger } from "@/lib/gsap";
-import { useScrollStore, computePhase } from "@/lib/scroll-store";
+import { useScrollStore, pageProgress } from "@/lib/scroll-store";
 
 export default function LenisProvider({
   children,
@@ -54,7 +54,7 @@ export default function LenisProvider({
     gsap.ticker.lagSmoothing(0);
 
     // Step 5: Step 5 (registering ScrollTriggers) happens in downstream
-    // components via useGSAP — Plan 04 HorizontalTrack is the first.
+    // components via useGSAP (project cards, talks, Strikers, journey).
 
     // Step 6: Write scroll state to Zustand on every Lenis tick (D-08, D-09)
     // Named reference required so we can remove it explicitly in cleanup.
@@ -67,8 +67,6 @@ export default function LenisProvider({
           "[LenisProvider] document.body.scrollHeight <= window.innerHeight — phase tracking disabled. Check layout min-heights."
         );
       }
-      const rawProgress = total > 0 ? lenisInstance.animatedScroll / total : 0;
-      const { phase, progress } = computePhase(rawProgress);
 
       // velocity MUST always be included here — omitting it causes displayVelocity
       // to lerp toward stale stored velocity rather than the current scroll velocity.
@@ -76,8 +74,8 @@ export default function LenisProvider({
       useScrollStore.getState().set({
         scrollY: lenisInstance.animatedScroll,
         velocity: lenisInstance.velocity, // required — drives displayVelocity lerp
-        phase,
-        progress,
+        phase: "vertical", // the whole page scrolls vertically
+        progress: pageProgress(lenisInstance.animatedScroll, total),
       });
     };
     lenis.on("scroll", onScrollState);

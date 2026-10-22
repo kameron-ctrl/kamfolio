@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import LenisProvider from "@/components/lenis-provider/LenisProvider";
 import MoonSceneClient from "@/components/canvas/MoonScene.client";
+import HireMe from "@/components/rocket/HireMe";
 
 export const metadata: Metadata = {
   title: "Kameron Benjamin",
@@ -21,6 +22,8 @@ export default function RootLayout({
         <LenisProvider>
           <MoonSceneClient />
           <div style={{ position: "relative", zIndex: 2 }}>{children}</div>
+          {/* Outside the content wrapper so its fixed positioning never inherits a transform */}
+          <HireMe />
         </LenisProvider>
       </body>
     </html>
