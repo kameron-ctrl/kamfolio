@@ -4,11 +4,12 @@
  *   1. Moon hero (moon drawn by the global canvas)
  *   2. About (docs/specs/about-skills-involvement)
  *   3. Projects: heading, then cards separated by empty sky (docs/specs/project-cards)
- *   4. Talks & writing (docs/specs/talks)
+ *   4. Talks & writing (docs/specs/talks), then All Things Open conference experience
  *   5. Skills, then Campus involvement: Strikers, Kappa Kappa Psi, Marching "100" (each with photos)
  *   6. Journey timeline (docs/specs/personality-timeline)
  */
 import { Fragment } from "react";
+import ConferenceSection from "@/components/conference/ConferenceSection";
 import AboutSection from "@/components/about/AboutSection";
 import InvolvementHeader from "@/components/involvement/InvolvementHeader";
 import OrgFeature from "@/components/involvement/OrgFeature";
@@ -38,6 +39,7 @@ export default function Page(): JSX.Element {
       ))}
 
       <TalksPanel />
+      <ConferenceSection />
       <SkillsSection />
       <InvolvementHeader />
       {ORGANIZATIONS.map((org, i) => (
