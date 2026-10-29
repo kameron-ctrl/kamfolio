@@ -6,9 +6,22 @@ import LenisProvider from "@/components/lenis-provider/LenisProvider";
 import MoonSceneClient from "@/components/canvas/MoonScene.client";
 import HireMe from "@/components/rocket/HireMe";
 
+// Share images (app/opengraph-image.jpg, app/twitter-image.jpg) need an absolute origin
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
+const TITLE = "Kameron Benjamin";
+const DESCRIPTION = "Full-stack developer with a strong creative tech focus.";
+
 export const metadata: Metadata = {
-  title: "Kameron Benjamin",
-  description: "Full-stack developer with a strong creative tech focus.",
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: { title: TITLE, description: DESCRIPTION, type: "website" },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };
 
 export default function RootLayout({

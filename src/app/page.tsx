@@ -7,6 +7,7 @@
  *   4. Talks & writing (docs/specs/talks), then All Things Open conference experience
  *   5. Skills, then Campus involvement: Strikers, Kappa Kappa Psi, Marching "100" (each with photos)
  *   6. Journey timeline (docs/specs/personality-timeline)
+ *   7. Resume: the PDF page plus download / open links
  */
 import { Fragment } from "react";
 import ConferenceSection from "@/components/conference/ConferenceSection";
@@ -16,6 +17,7 @@ import OrgFeature from "@/components/involvement/OrgFeature";
 import JourneyTimeline from "@/components/journey/JourneyTimeline";
 import MoonHero from "@/components/moon/MoonHero";
 import ProjectCard from "@/components/projects/ProjectCard";
+import ResumeSection from "@/components/resume/ResumeSection";
 import { ProjectsIntro, SkyGap } from "@/components/projects/TrackPanels";
 import SkillsSection from "@/components/skills/SkillsSection";
 import TalksPanel from "@/components/talks/TalksPanel";
@@ -46,6 +48,7 @@ export default function Page(): JSX.Element {
         <OrgFeature key={org.id} org={org} index={i} />
       ))}
       <JourneyTimeline />
+      <ResumeSection />
     </main>
   );
 }
