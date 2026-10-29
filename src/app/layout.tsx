@@ -7,11 +7,7 @@ import MoonSceneClient from "@/components/canvas/MoonScene.client";
 import HireMe from "@/components/rocket/HireMe";
 
 // Share images (app/opengraph-image.jpg, app/twitter-image.jpg) need an absolute origin
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000");
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kameron-ctrl.com";
 
 const TITLE = "Kameron Benjamin";
 const DESCRIPTION = "Full-stack developer with a strong creative tech focus.";
