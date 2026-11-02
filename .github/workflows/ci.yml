@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # canvas (optional dep, used by the nebula pixel tests) builds from source
+      - name: Install canvas system libraries
+        run: sudo apt-get update && sudo apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: site
+          path: out/
+
+  deploy:
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://kameron-ctrl.com
+    permissions:
+      id-token: write # OIDC: exchange the GitHub token for short-lived AWS creds
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: out/
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      # Only content-hashed _next/static files are immutable; public/ files (resume PDF,
+      # photos) keep their names across edits, and HTML/RSC payloads must revalidate
+      - name: Sync to S3
+        env:
+          BUCKET: s3://${{ vars.S3_BUCKET }}
+        run: |
+          aws s3 sync out/ "$BUCKET" --delete --exclude "*" --include "_next/static/*" \
+            --cache-control "public, max-age=31536000, immutable"
+          aws s3 sync out/ "$BUCKET" --delete --exclude "_next/static/*" --exclude "*.html" --exclude "*.txt" \
+            --cache-control "public, max-age=3600"
+          aws s3 sync out/ "$BUCKET" --delete --exclude "*" --include "*.html" --include "*.txt" \
+            --cache-control "no-cache"
+
+      - name: Invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
