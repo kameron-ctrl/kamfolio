@@ -38,7 +38,6 @@
     "@types/three": "^0.168",
     "@vitest/ui": "^1",
     "autoprefixer": "^10",
-    "canvas": "^2.11.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "jsdom": "^24",
@@ -46,5 +45,8 @@
     "tailwindcss": "^3.4.19",
     "typescript": "^5",
     "vitest": "^1"
+  },
+  "optionalDependencies": {
+    "canvas": "^2.11.2"
   }
 }
