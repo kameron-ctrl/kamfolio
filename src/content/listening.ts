@@ -16,7 +16,7 @@ export const LISTENING = {
 } as const;
 
 function resolveSource(): ListeningSource {
-  // Inlined at build time; set as GitHub repo variables for the deploy build
+  // Inlined at build time; set as GitHub repo secrets for the deploy build
   const user = process.env.NEXT_PUBLIC_LASTFM_USER ?? "";
   const apiKey = process.env.NEXT_PUBLIC_LASTFM_API_KEY ?? "";
   if (user && apiKey) return { kind: "lastfm", user, apiKey, limit: LISTENING_TRACK_COUNT };
