@@ -30,8 +30,8 @@ jobs:
       - run: npm run build
         env:
           # Listening section (docs/specs/listening); unset → section is hidden
-          NEXT_PUBLIC_LASTFM_USER: ${{ vars.LASTFM_USER }}
-          NEXT_PUBLIC_LASTFM_API_KEY: ${{ vars.LASTFM_API_KEY }}
+          NEXT_PUBLIC_LASTFM_USER: ${{ secrets.LASTFM_USER }}
+          NEXT_PUBLIC_LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
 
       - uses: actions/upload-artifact@v4
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
