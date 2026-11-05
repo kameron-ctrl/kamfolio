@@ -18,9 +18,9 @@ Spec: `docs/specs/listening/SPEC.md`. Branch: `feat/listening-section`. Tick eac
 - [x] `ListeningSection.tsx`: `"use client"`; Resume's grid; `SectionHeading` (kicker/title from content); `useStaggerReveal(ref, 0.1)`; returns null when `LISTENING_SOURCE.kind === "off"`; imports `./listening.css`
 - [x] Component tests: live vs past status, fallback tile, offline state, hidden when off
 
-## 3. Wire-up — page done, CI env pending
+## 3. Wire-up — done
 - [x] `src/app/page.tsx`: render `<ListeningSection />` between `<JourneyTimeline />` and `<ResumeSection />`, and update the docblock order list
-- [ ] `.github/workflows/ci.yml`: pass `NEXT_PUBLIC_LASTFM_USER: ${{ vars.LASTFM_USER }}` and `NEXT_PUBLIC_LASTFM_API_KEY: ${{ vars.LASTFM_API_KEY }}` as env to the `npm run build` step (push this file from the Mac: the dev gh token lacks the `workflow` scope)
+- [x] `.github/workflows/ci.yml`: pass `NEXT_PUBLIC_LASTFM_USER: ${{ vars.LASTFM_USER }}` and `NEXT_PUBLIC_LASTFM_API_KEY: ${{ vars.LASTFM_API_KEY }}` as env to the `npm run build` step (push this file from the Mac: the dev gh token lacks the `workflow` scope)
 
 ## 4. Verify — demo build checked at 1440, 375, 320 (2026-11-05)
 - [x] `npx tsc --noEmit`, `npm run lint`, `npm test`, `next build`
