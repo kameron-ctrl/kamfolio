@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import { buildRecentTracksUrl, parseRecentTracks } from "../lastfm";
 
 const art = (hash: string) => [
