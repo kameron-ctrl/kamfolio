@@ -1,0 +1,192 @@
+/* Intro loader + scroll cue. Tokens: src/styles/tokens.css */
+
+:root {
+  --loader-exit: 900ms; /* keep in sync with LOADER_EXIT_MS */
+  --cue-dot: 5px;
+}
+
+/* ---- Loader ---- */
+
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(60% 45% at 50% 46%, rgba(160, 200, 255, 0.07) 0%, transparent 70%),
+    radial-gradient(120% 70% at 50% 0%, var(--color-sky-top) 0%, var(--color-sky-bottom) 75%),
+    var(--color-sky-bottom);
+  transition:
+    opacity var(--loader-exit) var(--ease-out-expo),
+    visibility 0s linear var(--loader-exit);
+  /* Failsafe if hydration never happens: clear the page anyway. */
+  animation: site-loader-failsafe 600ms ease 10s forwards;
+}
+
+.site-loader.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.site-loader__inner {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  width: min(240px, 70vw);
+  transition:
+    transform var(--loader-exit) var(--ease-out-expo),
+    filter var(--loader-exit) var(--ease-out-expo);
+}
+
+.site-loader.is-leaving .site-loader__inner {
+  transform: scale(1.06);
+  filter: blur(6px);
+}
+
+.site-loader__track {
+  display: block;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background: var(--color-hairline);
+}
+
+.site-loader__bar {
+  display: block;
+  height: 100%;
+  background: var(--color-silver);
+  box-shadow: 0 0 8px rgba(160, 200, 255, 0.6);
+  transform-origin: left center;
+  transition: transform 500ms var(--ease-out-expo);
+}
+
+.site-loader__readout {
+  padding-left: 0.18em; /* balance the trailing tracking */
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes site-loader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ---- Scroll cue ---- */
+
+.scroll-cue {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(clamp(20px, 4vh, 36px) + env(safe-area-inset-bottom));
+  z-index: 40;
+  width: fit-content;
+  margin-inline: auto;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  /* Frosted pill like the Hire-me button, so it reads over the bright moon */
+  padding: 12px 12px 10px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  background: rgba(18, 18, 20, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--color-silver-dim);
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition:
+    opacity 600ms var(--ease-out-expo),
+    transform 600ms var(--ease-out-expo),
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.scroll-cue.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 300ms, 300ms, 0ms;
+}
+
+.scroll-cue:hover {
+  color: var(--color-silver);
+  border-color: rgba(241, 240, 224, 0.4);
+}
+
+.scroll-cue:focus-visible {
+  outline: 2px solid var(--color-nebula-teal);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.scroll-cue__label {
+  padding-left: 0.18em; /* balance the trailing tracking */
+}
+
+.scroll-cue__track {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(241, 240, 224, 0.25), transparent);
+}
+
+.scroll-cue__dot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--cue-dot);
+  height: var(--cue-dot);
+  margin-left: calc(var(--cue-dot) / -2);
+  border-radius: 50%;
+  background: var(--color-silver);
+  box-shadow: 0 0 10px var(--color-moon-glow);
+  animation: scroll-cue-fall 2s var(--ease-out-expo) infinite;
+}
+
+.scroll-cue:hover .scroll-cue__track {
+  background: linear-gradient(to bottom, rgba(241, 240, 224, 0.5), transparent);
+}
+
+@keyframes scroll-cue-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-loader,
+  .site-loader__inner,
+  .scroll-cue {
+    transition: none;
+  }
+
+  .site-loader.is-leaving .site-loader__inner {
+    transform: none;
+    filter: none;
+  }
+
+  .scroll-cue__dot {
+    animation: none;
+  }
+
+  .scroll-cue__dot {
+    top: 16px;
+  }
+}

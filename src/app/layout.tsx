@@ -5,6 +5,8 @@ import "./globals.css";
 import LenisProvider from "@/components/lenis-provider/LenisProvider";
 import MoonSceneClient from "@/components/canvas/MoonScene.client";
 import HireMe from "@/components/rocket/HireMe";
+import SiteLoader from "@/components/loader/SiteLoader";
+import ScrollCue from "@/components/loader/ScrollCue";
 
 // Share images (app/opengraph-image.jpg, app/twitter-image.jpg) need an absolute origin
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kameron-ctrl.com";
@@ -33,6 +35,8 @@ export default function RootLayout({
           <div style={{ position: "relative", zIndex: 2 }}>{children}</div>
           {/* Outside the content wrapper so its fixed positioning never inherits a transform */}
           <HireMe />
+          <ScrollCue />
+          <SiteLoader />
         </LenisProvider>
       </body>
     </html>

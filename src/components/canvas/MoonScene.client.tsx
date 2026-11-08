@@ -29,6 +29,7 @@ import { Canvas } from "@react-three/fiber";
 import { Hud, PerspectiveCamera, useTexture } from "@react-three/drei";
 import { MOON, MOON_TEXTURES } from "@/components/moon/tuning";
 import { MOON_DPR_CAP } from "./MoonScene.constants";
+import { useLoadStore } from "@/lib/load-store";
 
 const MoonScene = dynamic(() => import("@/components/moon/MoonScene"), { ssr: false });
 const NebulaScene = dynamic(() => import("./NebulaScene"), { ssr: false });
@@ -50,6 +51,7 @@ export default function MoonSceneClient(): JSX.Element {
 
   const handleReady = useCallback((): void => {
     setReady(true);
+    useLoadStore.getState().markSceneReady(); // lets the intro loader leave
   }, []);
 
   return (
