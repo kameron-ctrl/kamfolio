@@ -15,6 +15,7 @@ export default function AboutSection(): JSX.Element {
   return (
     <section
       ref={sectionRef}
+      id="about"
       aria-labelledby="about-heading"
       className="px-4 py-16 md:grid md:grid-cols-12 md:gap-8 md:px-[8vw] md:py-[16vh]"
     >

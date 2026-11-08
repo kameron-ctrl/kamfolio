@@ -19,6 +19,7 @@ import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import gsap, { ScrollTrigger } from "@/lib/gsap";
 import { useScrollStore, pageProgress } from "@/lib/scroll-store";
+import { setLenis } from "@/lib/lenis-instance";
 
 export default function LenisProvider({
   children,
@@ -40,6 +41,7 @@ export default function LenisProvider({
       autoRaf: false,
     });
     lenisRef.current = lenis;
+    setLenis(lenis); // SiteLoader pauses it, ScrollCue glides with it
 
     // Step 2: Bridge Lenis → ScrollTrigger BEFORE any triggers exist (Pitfall 2)
     lenis.on("scroll", ScrollTrigger.update);
@@ -84,6 +86,7 @@ export default function LenisProvider({
       lenis.off("scroll", ScrollTrigger.update);
       lenis.off("scroll", onScrollState);
       gsap.ticker.remove(tickerFn);
+      setLenis(null);
       lenis.destroy();
       lenisRef.current = null;
     };
