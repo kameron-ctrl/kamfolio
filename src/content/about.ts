@@ -10,7 +10,7 @@ export const ABOUT = {
   facts: [
     { label: "School", value: "Florida A&M University" },
     { label: "Class of", value: "2027" },
-    { label: "Now", value: "UCSC Open Source Contributor Catalyst" },
+    { label: "Now", value: "Building homelab AI agents" },
   ],
 } as const;
 
@@ -25,7 +25,7 @@ export const SKILLS: readonly SkillGroup[] = [
   { group: "Frontend & 3D", items: ["React", "Next.js", "React Native", "Three.js"] },
   {
     group: "Backend & Cloud",
-    items: ["Node.js", "FastAPI", "REST APIs", "Docker", "AWS (EC2, Lambda)", "Git & GitHub"],
+    items: ["Node.js", "FastAPI", "REST APIs", "Docker", "AWS (EC2, Lambda, S3, CloudFront)", "Linux & Proxmox", "GitHub Actions", "Git & GitHub"],
   },
   {
     group: "AI & ML",
@@ -205,9 +205,9 @@ export const JOURNEY: readonly JourneyNode[] = [
   {
     id: "now",
     title: "Now",
-    role: "Building CubeCoach & this site",
+    role: "Building homelab AI agents",
     dates: "2026",
-    line: "Shipping full-stack products with a creative edge.",
+    line: "Self-hosted coding agents on my own hardware, plus CubeCoach and this site.",
     planet: "radial-gradient(circle at 30% 30%, #f1f0e0, #9a9a99 80%)",
   },
   {

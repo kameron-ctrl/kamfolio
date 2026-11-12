@@ -11,6 +11,7 @@ import gsap from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/reduced-motion";
 import { useCubeStore } from "@/components/cube/cube-store";
 import { LEAF_DIAGNOSIS, type ProjectMedia as MediaKind } from "@/content/projects";
+import AgentPipeline from "./AgentPipeline";
 
 const MEDIA_FRAME =
   "relative aspect-[4/3] w-full overflow-hidden rounded-sm border border-[var(--color-hairline)]";
@@ -26,6 +27,7 @@ interface MediaProps {
 }
 
 export default function ProjectMedia({ media, revealed }: MediaProps): JSX.Element {
+  if (media === "agents") return <AgentPipeline revealed={revealed} />;
   return media === "leaf" ? <LeafScan revealed={revealed} /> : <CubeSlot revealed={revealed} />;
 }
 
