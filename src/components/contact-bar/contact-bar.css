@@ -1,0 +1,147 @@
+/* Contact bar (top-right). Tokens: src/styles/tokens.css. Same frosted pill as the rocket and scroll cue. */
+
+:root {
+  --contact-bar-gutter: 16px;
+  --contact-bar-enter: 600ms;
+  --contact-bar-tuck: 450ms;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --contact-bar-gutter: 24px;
+  }
+}
+
+.contact-bar {
+  position: fixed;
+  top: calc(var(--contact-bar-gutter) + env(safe-area-inset-top));
+  right: calc(var(--contact-bar-gutter) + env(safe-area-inset-right));
+  z-index: 45; /* above the scroll cue (40), below the rocket + its panel (50) */
+  max-width: calc(100vw - 2 * var(--contact-bar-gutter));
+  padding: 4px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  background: rgba(18, 18, 20, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition:
+    opacity var(--contact-bar-enter) var(--ease-out-expo),
+    transform var(--contact-bar-enter) var(--ease-out-expo),
+    border-color 150ms ease;
+}
+
+.contact-bar.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 450ms, 450ms, 0ms; /* lands just after the scroll cue */
+}
+
+/* Scrolling down: slide up out of view. Keyboard focus brings it back. */
+.contact-bar.is-visible.is-tucked:not(:focus-within) {
+  opacity: 0;
+  transform: translateY(calc(-100% - var(--contact-bar-gutter) - 8px));
+  pointer-events: none;
+  transition-duration: var(--contact-bar-tuck);
+  transition-delay: 0ms;
+}
+
+.contact-bar.is-visible.has-tucked {
+  transition-duration: var(--contact-bar-tuck);
+  transition-delay: 0ms;
+}
+
+.contact-bar:hover {
+  border-color: rgba(241, 240, 224, 0.28);
+}
+
+.contact-bar__list {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-bar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px 0 calc(12px + 0.18em); /* balance the trailing tracking */
+  border-radius: 999px;
+  color: var(--color-silver-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.contact-bar__link:hover {
+  color: var(--color-silver);
+  background: rgba(241, 240, 224, 0.06);
+}
+
+.contact-bar__link:active {
+  background: rgba(241, 240, 224, 0.1);
+}
+
+.contact-bar__link:focus-visible {
+  outline: 2px solid var(--color-nebula-teal);
+  outline-offset: 2px;
+  color: var(--color-silver);
+}
+
+/* Resume is the primary action: teal ring, brighter type */
+.contact-bar__item--resume .contact-bar__link {
+  color: var(--color-silver);
+  box-shadow: inset 0 0 0 1px rgba(46, 196, 182, 0.55);
+}
+
+.contact-bar__item--resume .contact-bar__link:hover {
+  background: rgba(46, 196, 182, 0.12);
+  box-shadow: inset 0 0 0 1px var(--color-nebula-teal);
+}
+
+.contact-bar__arrow {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0;
+  transform: translate(0, 0);
+  transition: transform 150ms ease;
+}
+
+.contact-bar__link:hover .contact-bar__arrow {
+  transform: translate(1px, -1px);
+}
+
+/* Phones: 44px tap targets; email lives in the rocket panel instead */
+@media (max-width: 767px) {
+  .contact-bar__link {
+    height: 44px;
+    padding: 0 10px 0 calc(10px + 0.18em);
+  }
+
+  .contact-bar__item--email {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-bar,
+  .contact-bar.is-visible,
+  .contact-bar.is-visible.is-tucked:not(:focus-within) {
+    transform: none;
+    transition: opacity 150ms linear;
+    transition-delay: 0ms;
+  }
+
+  .contact-bar__arrow {
+    transition: none;
+  }
+}
