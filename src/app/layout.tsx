@@ -5,6 +5,7 @@ import "./globals.css";
 import LenisProvider from "@/components/lenis-provider/LenisProvider";
 import MoonSceneClient from "@/components/canvas/MoonScene.client";
 import HireMe from "@/components/rocket/HireMe";
+import ContactBar from "@/components/contact-bar/ContactBar";
 import SiteLoader from "@/components/loader/SiteLoader";
 import ScrollCue from "@/components/loader/ScrollCue";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           <MoonSceneClient />
           <div style={{ position: "relative", zIndex: 2 }}>{children}</div>
           {/* Outside the content wrapper so its fixed positioning never inherits a transform */}
+          <ContactBar />
           <HireMe />
           <ScrollCue />
           <SiteLoader />
