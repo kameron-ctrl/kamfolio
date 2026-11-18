@@ -1,0 +1,531 @@
+/* kam.md teaser + side panel (docs/specs/kam-md/SPEC.md). Tokens: src/styles/tokens.css.
+   Motion is transform/opacity only; everything static under reduced motion. */
+
+:root {
+  --kam-accent: var(--color-nebula-teal);
+  --kam-panel-width: min(600px, 100vw);
+  --kam-slide: 650ms;
+  --kam-surface: rgba(14, 14, 16, 0.92);
+  --kam-row-hover: rgba(241, 240, 224, 0.035);
+  --kam-gutter: 16px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --kam-gutter: 24px;
+  }
+}
+
+/* ───────────── Teaser (mid-page doorway) ───────────── */
+
+.kam-teaser {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 80vh;
+  padding: 18vh calc(var(--kam-gutter) + 56px) 18vh var(--kam-gutter);
+  overflow: hidden;
+  touch-action: pan-y; /* vertical scroll stays native; horizontal swipes reach our handler */
+}
+
+.kam-teaser__inner {
+  width: min(520px, 100%);
+}
+
+.kam-teaser__kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kam-teaser__pulse {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--kam-accent);
+  box-shadow: 0 0 12px var(--kam-accent);
+}
+
+.kam-teaser__pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--kam-accent);
+  animation: kam-ping 1.8s ease-out infinite;
+}
+
+@keyframes kam-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.kam-teaser__heading {
+  margin-top: 18px;
+  font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: var(--gradient-silver);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Latest post, offset to the right like it's already sliding toward the side page */
+.kam-teaser__preview {
+  position: relative;
+  margin: 32px 0 0 clamp(0px, 4vw, 40px);
+  padding: 18px 20px 16px;
+  border: 1px solid var(--color-hairline);
+  border-left: 2px solid var(--kam-accent);
+  border-radius: 4px 14px 14px 4px;
+  background: var(--color-surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 24px 60px -30px rgba(46, 196, 182, 0.35);
+}
+
+.kam-teaser__quote {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--color-silver);
+  white-space: pre-line;
+}
+
+.kam-teaser__when {
+  margin-top: 12px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.kam-teaser__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 1px solid rgba(46, 196, 182, 0.45);
+  border-radius: 999px;
+  background: rgba(46, 196, 182, 0.08);
+  color: var(--color-silver);
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms var(--ease-out-expo);
+}
+
+.kam-teaser__cta:hover {
+  background: rgba(46, 196, 182, 0.16);
+  border-color: var(--kam-accent);
+}
+
+.kam-teaser__cta:active {
+  transform: scale(0.97);
+}
+
+.kam-teaser__cta:focus-visible {
+  outline: 2px solid var(--kam-accent);
+  outline-offset: 4px;
+}
+
+.kam-teaser__cta-arrow {
+  display: inline-block;
+  color: var(--kam-accent);
+  animation: kam-nudge 1.6s var(--ease-out-expo) infinite;
+}
+
+.kam-teaser__hint {
+  margin-top: 12px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-silver-dim);
+  opacity: 0.6;
+}
+
+/* Chevrons marching toward the seam */
+.kam-teaser__chevrons {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--kam-gutter) + 6px);
+  display: flex;
+  gap: 2px;
+  transform: translateY(-50%);
+}
+
+.kam-teaser__chevron {
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid var(--kam-accent);
+  border-right: 2px solid var(--kam-accent);
+  transform: rotate(45deg);
+  opacity: 0.15;
+  animation: kam-chevron 1.5s ease-in-out infinite;
+}
+
+.kam-teaser__chevron:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.kam-teaser__chevron:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+/* The edge the side page comes in through */
+.kam-teaser__seam {
+  position: absolute;
+  top: 12%;
+  bottom: 12%;
+  right: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--kam-accent) 50%, transparent);
+  box-shadow: 0 0 24px 2px rgba(46, 196, 182, 0.55);
+  opacity: 0.7;
+  animation: kam-seam 3s ease-in-out infinite;
+}
+
+@keyframes kam-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes kam-chevron {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: translateX(0) rotate(45deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(6px) rotate(45deg);
+  }
+}
+
+@keyframes kam-seam {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* ───────────── Side panel ───────────── */
+
+.kam-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60; /* above the rocket + its panel (50) */
+  pointer-events: none;
+}
+
+.kam-layer.is-open {
+  pointer-events: auto;
+}
+
+.kam-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 4, 6, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity var(--kam-slide) var(--ease-out-expo);
+}
+
+.kam-layer.is-open .kam-scrim {
+  opacity: 1;
+}
+
+.kam-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--kam-panel-width);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-left: 1px solid var(--color-hairline);
+  background:
+    radial-gradient(90% 40% at 100% 0%, rgba(46, 196, 182, 0.08), transparent 70%),
+    var(--kam-surface);
+  box-shadow: -40px 0 80px -20px rgba(0, 0, 0, 0.8);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform var(--kam-slide) var(--ease-out-expo),
+    visibility 0s linear var(--kam-slide);
+}
+
+.kam-layer.is-open .kam-panel {
+  transform: translateX(0);
+  visibility: visible;
+  transition:
+    transform var(--kam-slide) var(--ease-out-expo),
+    visibility 0s;
+}
+
+.kam-panel__bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: calc(10px + env(safe-area-inset-top)) var(--kam-gutter) 10px;
+  border-bottom: 1px solid var(--color-hairline);
+  background: rgba(14, 14, 16, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.kam-panel__back {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  color: var(--color-silver);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.kam-panel__back:hover {
+  background: rgba(241, 240, 224, 0.08);
+}
+
+.kam-panel__back:focus-visible {
+  outline: 2px solid var(--kam-accent);
+  outline-offset: 2px;
+}
+
+.kam-panel__title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--color-silver);
+  letter-spacing: -0.01em;
+}
+
+.kam-panel__subtitle {
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+/* Profile header */
+.kam-profile {
+  position: relative;
+  padding: 0 var(--kam-gutter) 20px;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.kam-profile__banner {
+  height: 140px;
+  margin: 0 calc(-1 * var(--kam-gutter));
+  background:
+    radial-gradient(circle at 78% 120%, rgba(241, 240, 224, 0.22) 0 38%, transparent 39%),
+    radial-gradient(60% 120% at 20% 0%, rgba(123, 79, 166, 0.45), transparent 70%),
+    radial-gradient(50% 100% at 90% 10%, rgba(46, 196, 182, 0.3), transparent 70%),
+    var(--color-sky-top);
+}
+
+.kam-profile .kam-avatar--lg {
+  margin-top: -44px;
+}
+
+.kam-profile__name {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-silver);
+}
+
+.kam-profile__handle {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+.kam-profile__bio {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-text-body);
+}
+
+.kam-profile__stat {
+  margin-top: 12px;
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.kam-profile__count {
+  color: var(--color-silver);
+}
+
+/* Avatar: a little moon */
+.kam-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: 999px;
+  background: radial-gradient(circle at 32% 28%, #f1f0e0 0%, #bdbcae 45%, #5d5d5a 100%);
+  color: #1c1c1f;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: 0 0 0 1px rgba(241, 240, 224, 0.15), 0 0 18px rgba(160, 200, 255, 0.18);
+}
+
+.kam-avatar--sm {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.kam-avatar--lg {
+  width: 84px;
+  height: 84px;
+  font-size: 30px;
+  box-shadow: 0 0 0 4px rgba(14, 14, 16, 1), 0 0 30px rgba(160, 200, 255, 0.25);
+}
+
+/* Feed */
+.kam-feed {
+  padding-bottom: calc(48px + env(safe-area-inset-bottom));
+}
+
+.kam-day__label {
+  position: sticky;
+  top: 61px; /* tucks under the panel bar */
+  z-index: 0;
+  padding: 10px var(--kam-gutter);
+  border-bottom: 1px solid var(--color-hairline);
+  background: rgba(14, 14, 16, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 10px;
+  color: var(--kam-accent);
+}
+
+.kam-post {
+  display: flex;
+  gap: 12px;
+  padding: 14px var(--kam-gutter);
+  border-bottom: 1px solid var(--color-hairline);
+  transition: background-color 150ms ease;
+}
+
+.kam-post:hover {
+  background: var(--kam-row-hover);
+}
+
+.kam-post__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.kam-post__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.kam-post__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-silver);
+}
+
+.kam-post__handle,
+.kam-post__time {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--color-text-muted);
+}
+
+.kam-post__dot {
+  color: var(--color-text-muted);
+}
+
+.kam-post__text {
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-text-body);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.kam-post__link {
+  color: var(--kam-accent);
+  text-decoration: none;
+}
+
+.kam-post__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.kam-post__link:focus-visible {
+  outline: 2px solid var(--kam-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.kam-feed__empty {
+  padding: 48px var(--kam-gutter);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+/* ───────────── Reduced motion ───────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .kam-teaser__pulse::after,
+  .kam-teaser__cta-arrow,
+  .kam-teaser__chevron,
+  .kam-teaser__seam {
+    animation: none;
+  }
+
+  .kam-teaser__chevron {
+    opacity: 0.6;
+  }
+
+  .kam-panel,
+  .kam-layer.is-open .kam-panel {
+    transition: visibility 0s;
+  }
+
+  .kam-panel {
+    transform: none;
+  }
+
+  .kam-scrim {
+    transition: none;
+  }
+}
