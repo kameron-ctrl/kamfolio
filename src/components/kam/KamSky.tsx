@@ -71,7 +71,7 @@ export default function KamSky({
               />
             ))}
           </svg>
-          {sky.stars.map((star, i) => (
+          {sky.stars.map((star) => (
             <span
               key={star.id}
               data-testid="kam-star"
@@ -81,8 +81,6 @@ export default function KamSky({
                   left: `${star.x * 100}%`,
                   top: `${star.y * 100}%`,
                   "--star-r": `${star.r}px`,
-                  "--star-delay": `${star.delay}s`,
-                  "--star-enter": `${Math.min(i, 40) * 18}ms`,
                 } as CSSProperties
               }
               onMouseEnter={() => setActiveId(star.id)}
@@ -92,8 +90,7 @@ export default function KamSky({
           ))}
         </div>
       )}
-      {/* keyed so each new quote re-runs its fade-in */}
-      <PullQuote key={(active ?? latest).id} post={active ?? latest} large={!isSky} />
+      <PullQuote post={active ?? latest} large={!isSky} />
     </div>
   );
 }

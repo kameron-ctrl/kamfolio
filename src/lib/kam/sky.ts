@@ -21,7 +21,6 @@ const Y_JITTER = 0.025;
 const R_MIN = 1.8;
 const R_GROWTH = 2.2;
 const R_FULL_AT_CHARS = 280;
-const TWINKLE_SPREAD_S = 6;
 const MINUTES_PER_DAY = 24 * 60;
 
 export interface SkyStar {
@@ -35,8 +34,6 @@ export interface SkyStar {
   readonly y: number;
   /** Radius in px; longer thoughts burn brighter. */
   readonly r: number;
-  /** Twinkle offset in seconds. */
-  readonly delay: number;
 }
 
 export interface SkyLink {
@@ -102,7 +99,6 @@ export function buildSky(days: readonly KamDay[]): Sky {
       x: clamp((column + 0.5) * width + (unit(`x:${post.id}`) - 0.5) * width * X_JITTER),
       y: clamp(altitude(minutesInKamZone(post.at)) + (unit(`y:${post.id}`) - 0.5) * 2 * Y_JITTER),
       r: R_MIN + R_GROWTH * Math.min(post.text.length, R_FULL_AT_CHARS) / R_FULL_AT_CHARS,
-      delay: Math.round(unit(`t:${post.id}`) * TWINKLE_SPREAD_S * 100) / 100,
     }));
     stars.push(...placed);
     for (let i = 1; i < placed.length; i++) {
