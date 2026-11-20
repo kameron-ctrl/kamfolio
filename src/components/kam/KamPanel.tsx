@@ -5,18 +5,21 @@
  * slides in from the right over the site. Lives in a portal on <body> so no
  * section transform or stacking context can trap it.
  */
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { countPosts, formatDayLabel, thoughtsLabel } from "@/lib/kam/format";
+import { countPosts, formatDayLabel, postDomId, thoughtsLabel } from "@/lib/kam/format";
 import { useKamStore } from "@/lib/kam/kam-store";
 import type { KamDay } from "@/lib/kam/types";
 import { MONO, SANS } from "@/components/ui/classes";
 import KamAvatar from "./KamAvatar";
 import KamPost from "./KamPost";
+import KamSky from "./KamSky";
 import { useDialogFocus, useKamHashSync, useScrollLock } from "./useKamPanelBehavior";
 import "./kam.css";
 
 const TITLE_ID = "kam-panel-title";
+/** How long a post jumped to from the sky stays highlighted. */
+const PICK_HIGHLIGHT_MS = 1800;
 
 function useMounted(): boolean {
   const [mounted, setMounted] = useState(false);
@@ -41,7 +44,7 @@ function Profile({ total }: { total: number }): JSX.Element {
   );
 }
 
-function Feed({ days }: { days: readonly KamDay[] }): JSX.Element {
+function Feed({ days, pickedId }: { days: readonly KamDay[]; pickedId: string | null }): JSX.Element {
   if (days.length === 0) {
     return <p className={`${SANS} kam-feed__empty`}>No thoughts yet. Check back later today.</p>;
   }
@@ -52,7 +55,12 @@ function Feed({ days }: { days: readonly KamDay[] }): JSX.Element {
           <h3 className={`${MONO} kam-day__label`}>{formatDayLabel(day.date)}</h3>
           <ol className="kam-day__posts">
             {day.posts.map((post) => (
-              <li key={post.id}>
+              <li
+                key={post.id}
+                id={postDomId(post.id)}
+                tabIndex={-1}
+                className={`kam-feed__item${post.id === pickedId ? " is-picked" : ""}`}
+              >
                 <KamPost post={post} />
               </li>
             ))}
@@ -70,6 +78,24 @@ export default function KamPanel({ days }: { days: readonly KamDay[] }): JSX.Ele
   const panelRef = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const total = countPosts(days);
+  const [pickedId, setPickedId] = useState<string | null>(null);
+
+  // A star in the sky was clicked: bring its post into view and keep focus inside the dialog.
+  const pick = useCallback((postId: string) => {
+    const target = document.getElementById(postDomId(postId));
+    if (!target) return;
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    // Focus first: focusing after a smooth scroll starts cancels the scroll in Chromium.
+    target.focus({ preventScroll: true });
+    target.scrollIntoView?.({ block: "center", behavior: reduced ? "auto" : "smooth" });
+    setPickedId(postId);
+  }, []);
+
+  useEffect(() => {
+    if (!pickedId) return;
+    const timer = window.setTimeout(() => setPickedId(null), PICK_HIGHLIGHT_MS);
+    return () => window.clearTimeout(timer);
+  }, [pickedId]);
 
   // Closed: out of the tab order and the accessibility tree, but still mounted so it can slide out.
   // Runs before useDialogFocus so the panel is no longer inert when focus moves in.
@@ -89,6 +115,7 @@ export default function KamPanel({ days }: { days: readonly KamDay[] }): JSX.Ele
   return createPortal(
     <div className={`kam-layer${isOpen ? " is-open" : ""}`} data-testid="kam-layer">
       <div className="kam-scrim" aria-hidden="true" onClick={close} />
+      <KamSky days={days} onPick={pick} />
       <aside
         ref={panelRef}
         role="dialog"
@@ -110,7 +137,7 @@ export default function KamPanel({ days }: { days: readonly KamDay[] }): JSX.Ele
           </div>
         </header>
         <Profile total={total} />
-        <Feed days={days} />
+        <Feed days={days} pickedId={pickedId} />
       </aside>
     </div>,
     document.body

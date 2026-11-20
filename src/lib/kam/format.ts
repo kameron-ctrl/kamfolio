@@ -72,6 +72,11 @@ export function isSideSwipe(dx: number, dy: number): boolean {
   return dx <= -SIDE_SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * SIDE_SWIPE_DOMINANCE;
 }
 
+/** DOM id of a post in the feed, so the night sky can jump to it. */
+export function postDomId(postId: string): string {
+  return `kam-post-${postId}`;
+}
+
 export function thoughtsLabel(count: number): string {
   return `${count} ${count === 1 ? "thought" : "thoughts"}`;
 }

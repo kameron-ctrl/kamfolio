@@ -529,3 +529,226 @@
     transition: none;
   }
 }
+
+/* ───────────── Night sky (wide screens: the space left of the panel) ───────────── */
+
+.kam-sky {
+  display: none;
+}
+
+/* Only when at least ~580px is free beside the panel; narrower, it reads as clutter */
+@media (min-width: 1180px) {
+  .kam-sky {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: var(--kam-panel-width);
+    display: block;
+    pointer-events: none; /* empty sky passes clicks to the scrim, which closes the panel */
+    /* Night tint so busy site sections behind the scrim do not compete with the stars */
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgba(123, 79, 166, 0.07), transparent 60%),
+      linear-gradient(90deg, rgba(4, 4, 8, 0.72), rgba(4, 4, 8, 0.5));
+    opacity: 0;
+    transition: opacity 400ms var(--ease-out-expo);
+  }
+
+  .kam-layer.is-open .kam-sky {
+    opacity: 1;
+    transition-delay: calc(var(--kam-slide) * 0.4);
+  }
+}
+
+.kam-sky__field {
+  position: absolute;
+  inset: 9vh 7% 30vh 7%;
+}
+
+.kam-sky__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.kam-sky__line {
+  stroke: var(--color-star-field);
+  stroke-width: 1;
+  stroke-opacity: 0.16;
+  stroke-dasharray: 2 5;
+  transition: stroke-opacity 250ms ease, stroke 250ms ease;
+}
+
+.kam-sky__line.is-lit {
+  stroke: var(--kam-accent);
+  stroke-opacity: 0.7;
+  stroke-dasharray: none;
+}
+
+.kam-star {
+  position: absolute;
+  width: calc(var(--star-r) * 2);
+  height: calc(var(--star-r) * 2);
+  margin: calc(var(--star-r) * -1) 0 0 calc(var(--star-r) * -1);
+  border-radius: 50%;
+  background: var(--color-silver);
+  box-shadow:
+    0 0 calc(var(--star-r) * 3) rgba(200, 216, 255, 0.55),
+    0 0 calc(var(--star-r) * 8) rgba(160, 200, 255, 0.18);
+  pointer-events: auto;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.2);
+  transition:
+    opacity 700ms var(--ease-out-expo),
+    transform 700ms var(--ease-out-expo),
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* A bigger hit area than the dot itself */
+.kam-star::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+}
+
+.kam-layer.is-open .kam-star {
+  opacity: 0.85;
+  transform: scale(1);
+  transition-delay: calc(var(--kam-slide) * 0.5 + var(--star-enter)), calc(var(--kam-slide) * 0.5 + var(--star-enter)), 0s, 0s;
+  animation: kam-twinkle 5.5s ease-in-out var(--star-delay) infinite;
+}
+
+.kam-layer.is-open .kam-star:hover,
+.kam-layer.is-open .kam-star.is-active {
+  opacity: 1;
+  transform: scale(1.9);
+  background: var(--kam-accent);
+  box-shadow:
+    0 0 10px rgba(46, 196, 182, 0.8),
+    0 0 28px rgba(46, 196, 182, 0.35);
+  animation: none;
+  transition-delay: 0s;
+}
+
+@keyframes kam-twinkle {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* The pull quote: quiet caption under the sky, or the whole show when there are few posts */
+
+.kam-quote {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: 9vh;
+  max-width: 34rem;
+  margin: 0;
+  animation: kam-quote-in 450ms var(--ease-out-expo) both;
+}
+
+.kam-quote__text {
+  margin: 0;
+  font-size: clamp(1.05rem, 0.6rem + 0.7vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--color-text-body);
+  white-space: pre-line;
+  text-wrap: pretty;
+}
+
+.kam-quote__meta {
+  margin-top: 14px;
+  color: var(--color-text-muted);
+}
+
+.kam-quote--large {
+  top: 50%;
+  bottom: auto;
+  max-width: 40rem;
+  transform: translateY(-50%);
+  animation-name: kam-quote-in-centered;
+}
+
+.kam-quote--large .kam-quote__text {
+  font-size: clamp(1.9rem, 0.8rem + 2.2vw, 3.1rem);
+  font-weight: 250;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--color-silver);
+}
+
+.kam-quote--large .kam-quote__text::before {
+  content: "\201C";
+  display: block;
+  height: 0.55em;
+  margin-left: -0.06em;
+  font-size: 2.4em;
+  line-height: 1;
+  color: var(--kam-accent);
+}
+
+@keyframes kam-quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes kam-quote-in-centered {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-50% + 10px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+/* A post jumped to from the sky */
+.kam-feed__item {
+  outline: none;
+  transition: background-color 600ms ease;
+}
+
+.kam-feed__item.is-picked {
+  background: rgba(46, 196, 182, 0.09);
+  box-shadow: inset 2px 0 0 var(--kam-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kam-sky,
+  .kam-layer.is-open .kam-sky,
+  .kam-star,
+  .kam-layer.is-open .kam-star,
+  .kam-feed__item {
+    transition: none;
+    animation: none;
+  }
+
+  .kam-star,
+  .kam-layer.is-open .kam-star:hover,
+  .kam-layer.is-open .kam-star.is-active {
+    transform: none;
+  }
+
+  .kam-quote,
+  .kam-quote--large {
+    animation: none;
+  }
+}
